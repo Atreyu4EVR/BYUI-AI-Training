@@ -6,11 +6,31 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BYU-Idaho Introduction to Artificial Intelligence</title>
-    <script type="module" src="./src/home-main.tsx"></script>
+    <script>
+        // Handle redirected routes from 404.html
+        (function () {
+            const query = window.location.search;
+            const queryParams = new URLSearchParams(query);
+            const path = queryParams.get('p');
+
+            if (path) {
+                // Remove the query parameter
+                history.replaceState(null, null,
+                    window.location.pathname
+                        .replace('index.html', '')
+                        .replace(/\/$/, '')
+                    + '/' + path
+                    + window.location.hash
+                );
+            }
+        })();
+    </script>
+    <link href="./src/index.css" rel="stylesheet">
 </head>
 
 <body class="font-sans leading-normal tracking-normal text-slate-800">
     <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
 </body>
 
 </html>

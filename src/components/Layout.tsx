@@ -1,15 +1,23 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import { useTheme } from "../context/ThemeContext";
 
-interface LayoutProps {
-  children: ReactNode;
-}
+const Layout: React.FC = () => {
+  const { theme } = useTheme();
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div
+      className={`min-h-screen flex flex-col ${
+        theme === "dark"
+          ? "bg-slate-900 text-slate-100"
+          : "bg-slate-50 text-slate-800"
+      }`}
+    >
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow">
+        <Outlet />
+      </main>
       {/* Optional: Add a footer here */}
     </div>
   );

@@ -12,8 +12,34 @@ export default {
     "./about.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          light: "#0ea5e9",
+          dark: "#38bdf8",
+        },
+        secondary: {
+          light: "#10b981",
+          dark: "#34d399",
+        },
+      },
+      backgroundColor: {
+        dark: "#1e293b",
+        light: "#ffffff",
+      },
+      textColor: {
+        dark: {
+          primary: "#f8fafc",
+          secondary: "#cbd5e1",
+        },
+        light: {
+          primary: "#1e293b",
+          secondary: "#64748b",
+        },
+      },
+    },
   },
   plugins: [],
 };

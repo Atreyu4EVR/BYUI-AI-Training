@@ -90,9 +90,11 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500 mt-6">
-              <h4 className="font-semibold text-slate-800 mb-2">Bottom Line</h4>
-              <p className="text-slate-700">
+            <div className="bg-amber-50 dark:bg-slate-900 p-4 rounded-lg border-l-4 border-amber-500 dark:border-indigo-400 mt-6">
+              <h4 className="font-semibold text-slate-800 dark:text-indigo-400 mb-2">
+                Bottom Line
+              </h4>
+              <p className="text-slate-700 dark:text-slate-100">
                 You don't have to be an expert to benefit from AI—you just need
                 a starting point. This training will give you hands-on
                 experience, clear examples, and real-world applications that
@@ -124,19 +126,19 @@ const Home = () => {
         </div>
 
         {/* Prerequisites Callout */}
-        <div className="bg-amber-50 p-5 rounded-lg border-l-4 border-amber-500">
-          <h2 className="text-xl font-semibold text-slate-800 mb-2">
+        <div className="bg-amber-50 dark:bg-slate-900 p-5 rounded-lg border-l-4 border-amber-500 dark:border-indigo-400">
+          <h2 className="text-xl font-semibold text-slate-800 dark:text-indigo-400 mb-2">
             Before You Begin
           </h2>
-          <p className="text-slate-700">
+          <p className="text-slate-700 dark:text-slate-100">
             Please ensure you have completed the necessary setup steps outlined
             on the{" "}
             <a
-              href="./prerequisites.html"
-              className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200"
+              href="/prerequisites"
+              className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200 dark:text-indigo-300 dark:hover:text-indigo-200"
             >
               Prerequisites page
-            </a>
+            </a>{" "}
             before diving into the lessons or exercises.
           </p>
         </div>
@@ -157,26 +159,26 @@ const Home = () => {
                 Artificial Intelligence.
               </p>
               <div className="space-y-2 border-t pt-4">
-                <p
-                  className="block text-slate-400 text-sm cursor-not-allowed"
-                  title="Coming Soon"
-                >
-                  • Intro (TBD)
-                </p>
                 <a
-                  href="./history.html"
+                  href="/getting-started"
+                  className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
+                >
+                  • Getting Started
+                </a>
+                <a
+                  href="/history"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • History of AI
                 </a>
                 <a
-                  href="./capabilities.html"
+                  href="/capabilities"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • AI Capabilities & Tasks
                 </a>
                 <a
-                  href="./how-it-works.html"
+                  href="/how-it-works"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • How Generative AI Works
@@ -216,7 +218,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Minimal Context Card */}
             <a
-              href="./minimal.html"
+              href="/minimal"
               className="group block p-6 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-cyan-300 transition-all duration-300"
             >
               <h3 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-cyan-700 transition-colors duration-200">
@@ -229,7 +231,7 @@ const Home = () => {
 
             {/* Moderate Context Card */}
             <a
-              href="./moderate.html"
+              href="/moderate"
               className="group block p-6 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-cyan-300 transition-all duration-300"
             >
               <h3 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-cyan-700 transition-colors duration-200">
@@ -242,7 +244,7 @@ const Home = () => {
 
             {/* Comprehensive Context Card */}
             <a
-              href="./comprehensive.html"
+              href="/comprehensive"
               className="group block p-6 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all duration-300"
             >
               <h3 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-emerald-700 transition-colors duration-200">
@@ -255,14 +257,13 @@ const Home = () => {
           </div>
         </div>
 
-        {/* About Section Placeholder Link */}
+        {/* About Section Link */}
         <div className="border-t border-slate-200 pt-8 text-center">
           <a
-            href="#"
-            className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200 text-sm cursor-not-allowed"
-            title="Coming Soon"
+            href="/about"
+            className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200 text-sm"
           >
-            About This Training (TBD)
+            About
           </a>
         </div>
       </div>

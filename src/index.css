@@ -1,3 +1,204 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base dark mode overrides */
+@layer base {
+  /* Smooth transitions when switching between light and dark modes */
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Default text links in dark mode */
+  .dark a:not([class]) {
+    @apply text-cyan-400 hover:text-cyan-300;
+  }
+
+  /* Background colors for cards in dark mode */
+  .dark .bg-white {
+    @apply bg-slate-800;
+  }
+
+  /* Text colors in dark mode */
+  .dark .text-slate-900 {
+    @apply text-slate-100;
+  }
+
+  .dark .text-slate-800 {
+    @apply text-slate-200;
+  }
+
+  .dark .text-slate-700 {
+    @apply text-slate-300;
+  }
+
+  .dark .text-slate-600 {
+    @apply text-slate-400;
+  }
+
+  .dark .text-slate-500 {
+    @apply text-slate-400;
+  }
+
+  /* Timeline text colors - improved contrast for dark mode */
+  .dark .history-timeline h2,
+  .dark .history-timeline h3 {
+    @apply text-white;
+  }
+
+  .dark .history-timeline p {
+    @apply text-slate-200;
+  }
+
+  /* Timeline special elements - improve contrast */
+  .dark .timeline-circle {
+    @apply border-slate-400;
+  }
+
+  .dark .timeline-year {
+    @apply text-white font-medium;
+  }
+
+  /* Dark purple/highlight circles should have better contrast text */
+  .dark .bg-purple-600 .timeline-year,
+  .dark .bg-indigo-600 .timeline-year,
+  .dark .bg-blue-600 .timeline-year,
+  .dark .bg-green-600 .timeline-year,
+  .dark .bg-orange-500 .timeline-year,
+  .dark .bg-red-600 .timeline-year,
+  .dark .bg-teal-600 .timeline-year {
+    @apply text-white font-bold;
+  }
+
+  /* Improved contrast for timeline content cards */
+  .dark .timeline-content .bg-slate-50 {
+    @apply bg-slate-800 border-slate-700;
+  }
+
+  .dark .timeline-content .text-slate-600 {
+    @apply text-slate-300;
+  }
+
+  /* Timeline vertical line in dark mode */
+  .dark .history-timeline .bg-slate-200 {
+    @apply bg-slate-600;
+  }
+
+  /* Non-featured milestone background in dark mode */
+  .dark .timeline-circle.bg-slate-200 {
+    @apply bg-slate-600;
+  }
+
+  .dark .timeline-circle.bg-slate-200 .timeline-year {
+    @apply text-white;
+  }
+
+  /* Border colors in dark mode */
+  .dark .border-slate-200 {
+    @apply border-slate-700;
+  }
+
+  /* Shadow styling for dark mode */
+  .dark .shadow-sm {
+    @apply shadow-slate-900/30;
+  }
+
+  /* Card and section backgrounds for dark mode */
+  .dark .bg-slate-50 {
+    @apply bg-slate-700;
+  }
+
+  /* New dark mode styling for callout sections */
+  /* Amber callouts */
+  .dark .bg-amber-50 {
+    background-color: #0f172a; /* slate-900 */
+    color: #f1f5f9; /* slate-100 */
+    border-radius: 0.375rem; /* rounded-md */
+  }
+
+  /* Fix border colors with direct CSS properties to avoid circular dependencies */
+  .dark .border-amber-500 {
+    border-color: #818cf8; /* indigo-400 */
+  }
+
+  .dark .text-amber-800,
+  .dark .text-slate-800.dark\:text-amber-100 {
+    color: #818cf8; /* indigo-400 */
+  }
+
+  .dark .text-amber-700,
+  .dark .text-slate-700.dark\:text-amber-50 {
+    color: #f1f5f9; /* slate-100 */
+  }
+
+  /* Cyan callouts */
+  .dark .bg-cyan-50 {
+    background-color: #0f172a; /* slate-900 */
+    color: #f1f5f9; /* slate-100 */
+    border-radius: 0.375rem; /* rounded-md */
+  }
+
+  /* Use direct CSS properties to avoid circular dependencies */
+  .dark .border-cyan-500 {
+    border-color: #818cf8; /* indigo-400 */
+  }
+
+  .dark .text-cyan-800 {
+    color: #818cf8; /* indigo-400 */
+  }
+
+  .dark .text-cyan-700 {
+    color: #f1f5f9; /* slate-100 */
+  }
+
+  /* Green callouts */
+  .dark .bg-green-50 {
+    background-color: #0f172a; /* slate-900 */
+    color: #f1f5f9; /* slate-100 */
+    border-radius: 0.375rem; /* rounded-md */
+  }
+
+  /* Use direct CSS properties to avoid circular dependencies */
+  .dark .border-green-500 {
+    border-color: #818cf8; /* indigo-400 */
+  }
+
+  .dark .text-green-800 {
+    color: #818cf8; /* indigo-400 */
+  }
+
+  .dark .text-green-700 {
+    color: #f1f5f9; /* slate-100 */
+  }
+
+  /* Improve disabled/placeholder elements contrast */
+  .dark .cursor-not-allowed {
+    @apply opacity-60;
+  }
+
+  /* Improve form elements in dark mode */
+  .dark input,
+  .dark textarea,
+  .dark select {
+    @apply bg-slate-700 border-slate-600 text-slate-200;
+  }
+
+  /* Improve hover states on cards in dark mode */
+  .dark .hover\:shadow-md:hover {
+    @apply shadow-slate-900/50;
+  }
+
+  /* Custom color adjustments for links and buttons in dark mode */
+  .dark .dark\:hover\:bg-slate-600:hover {
+    @apply bg-slate-600;
+  }
+
+  /* Fix contrast for colored borders in dark mode by using direct CSS to avoid circular dependencies */
+  .dark .hover\:border-cyan-300:hover {
+    border-color: #0ea5e9; /* cyan-500 */
+  }
+
+  .dark .hover\:border-emerald-300:hover {
+    border-color: #10b981; /* emerald-500 */
+  }
+}

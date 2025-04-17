@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found</title>
+    <script>
+        // GitHub Pages SPA hack: redirect 404s to index.html with the original path
+        const pathSegmentsToKeep = 0; // Adjust this if your app is in a subdirectory
+        const loc = window.location;
+        const newUrl = `${loc.protocol}//${loc.hostname}${loc.port ? ':' + loc.port : ''}${pathSegmentsToKeep ? loc.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') : ''
+            }/index.html?p=${loc.pathname.split('/').slice(pathSegmentsToKeep).join('/')}${loc.search}${loc.hash}`;
+        window.location.replace(newUrl);
+    </script>
+</head>
+
+<body>
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, <a href="index.html">click here</a>.</p>
+</body>
+
+</html>

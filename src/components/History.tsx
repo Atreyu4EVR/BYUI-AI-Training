@@ -214,7 +214,7 @@ const History = () => {
         </div>
 
         {/* Timeline container */}
-        <div className="relative">
+        <div className="relative history-timeline">
           {timelineSections.map((section, sectionIndex) => (
             <div key={sectionIndex} className="mb-12">
               {/* Section Header */}
@@ -239,12 +239,12 @@ const History = () => {
                   >
                     {/* Year Bubble */}
                     <div
-                      className={`flex-shrink-0 w-16 h-16 rounded-full ${
+                      className={`flex-shrink-0 w-16 h-16 rounded-full timeline-circle ${
                         milestone.featured ? section.color : "bg-slate-200"
                       } flex items-center justify-center z-10 shadow`}
                     >
                       <span
-                        className={`text-sm font-bold ${
+                        className={`text-sm font-bold timeline-year ${
                           milestone.featured ? "text-white" : "text-slate-700"
                         }`}
                       >
@@ -252,21 +252,22 @@ const History = () => {
                       </span>
                     </div>
 
-                    {/* Milestone Content Box */}
-                    <div
-                      className={`ml-6 p-4 rounded-lg shadow flex-grow ${
-                        milestone.featured
-                          ? "bg-slate-50 border-l-4 " +
-                            section.color.replace("bg-", "border-")
-                          : "bg-white"
-                      }`}
-                    >
-                      <h3 className="text-lg font-bold text-slate-800">
-                        {milestone.title}
-                      </h3>
-                      <p className="text-slate-600 mt-1">
-                        {milestone.description}
-                      </p>
+                    {/* Content Box */}
+                    <div className="ml-6 timeline-content">
+                      <div
+                        className={`p-4 bg-slate-50 rounded-lg shadow-sm border ${
+                          milestone.featured
+                            ? `border-l-4 ${section.color}`
+                            : "border-slate-200"
+                        }`}
+                      >
+                        <h3 className="text-lg font-semibold text-slate-800 mb-2">
+                          {milestone.title}
+                        </h3>
+                        <p className="text-slate-600">
+                          {milestone.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}

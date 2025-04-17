@@ -264,16 +264,6 @@ const Home = () => {
             </Link>
           </div>
         </div>
-
-        {/* About Section Link */}
-        <div className="border-t border-slate-200 pt-8 text-center">
-          <Link
-            to="/about"
-            className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200 text-sm"
-          >
-            About
-          </Link>
-        </div>
       </div>
     </div>
   );

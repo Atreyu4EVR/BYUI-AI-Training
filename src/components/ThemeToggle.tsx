@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import { Moon, Sun } from "lucide-react";
+import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 
 const ThemeToggle: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -11,29 +11,23 @@ const ThemeToggle: React.FC = () => {
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="p-2 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-white"
+      className="flex items-center justify-center p-1 rounded-full focus:outline-none"
     >
-      <div className="w-8 h-8 relative">
-        {/* Sun icon */}
-        <Sun
-          className={`absolute top-0 left-0 transition-all duration-300 ${
-            isDark
-              ? "opacity-0 scale-50 rotate-90"
-              : "opacity-100 scale-100 rotate-0"
-          } text-yellow-400`}
-          size={24}
-          strokeWidth={2}
-        />
+      <div className="relative w-12 h-6 transition-colors duration-300 bg-slate-700 dark:bg-slate-600 rounded-full shadow-inner overflow-hidden">
+        {/* Track */}
+        <div className="absolute inset-0 flex items-center justify-between px-1">
+          {/* Sun icon - light mode */}
+          <SunIcon className="h-4 w-4 text-yellow-300" />
 
-        {/* Moon icon */}
-        <Moon
-          className={`absolute top-0 left-0 transition-all duration-300 ${
-            isDark
-              ? "opacity-100 scale-100 rotate-0"
-              : "opacity-0 scale-50 rotate-90"
-          } text-slate-300`}
-          size={24}
-          strokeWidth={2}
+          {/* Moon icon - dark mode */}
+          <MoonIcon className="h-4 w-4 text-slate-200" />
+        </div>
+
+        {/* Thumb/Handle */}
+        <div
+          className={`absolute top-0.5 left-0.5 bg-white w-5 h-5 rounded-full shadow transform transition-transform duration-300 ${
+            isDark ? "translate-x-6" : "translate-x-0"
+          }`}
         />
       </div>
     </button>

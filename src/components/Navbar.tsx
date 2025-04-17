@@ -44,6 +44,11 @@ const Navbar = () => {
     }`;
   };
 
+  // Helper for external links
+  const getExternalLinkClass = () => {
+    return "block w-full px-4 py-2 text-left text-sm text-slate-200 hover:bg-slate-700 hover:text-white dark:hover:bg-slate-500 transition-colors duration-150";
+  };
+
   // Helper for submenu headers
   const getSubmenuHeaderClass = (isActive: boolean) => {
     const baseClass =
@@ -59,7 +64,12 @@ const Navbar = () => {
     "capabilities",
     "how-it-works",
     "getting-started",
+  ]);
+
+  // Check if any resource paths are active
+  const isAnyResourceActive = isPathActive([
     "tool-comparison",
+    "product-rankings",
   ]);
 
   const toggleSubmenu = (menu: string) => {
@@ -71,8 +81,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-slate-800 shadow-md dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-slate-800 shadow-md dark:bg-slate-900 w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link
@@ -83,9 +93,9 @@ const Navbar = () => {
               <span>Artificial Intelligence Training</span>
             </Link>
           </div>
-          <div className="flex items-center space-x-2">
-            <ThemeToggle />
-            <div className="flex space-x-1 md:space-x-2 lg:space-x-4">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3 md:space-x-5">
+              {/* Home */}
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -97,7 +107,19 @@ const Navbar = () => {
                 Home
               </NavLink>
 
-              {/* Consolidated Lessons Dropdown */}
+              {/* Prerequisites */}
+              <NavLink
+                to="/prerequisites"
+                className={({ isActive }) =>
+                  `${baseLinkClasses} ${
+                    isActive ? activeLinkClasses : inactiveLinkClasses
+                  }`
+                }
+              >
+                Prerequisites
+              </NavLink>
+
+              {/* Lessons Dropdown */}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton
@@ -174,14 +196,6 @@ const Navbar = () => {
                               How It Works
                             </Link>
                           </MenuItem>
-                          <MenuItem>
-                            <Link
-                              to="/tool-comparison"
-                              className={getMenuItemClass("tool-comparison")}
-                            >
-                              Tool Comparison
-                            </Link>
-                          </MenuItem>
                         </div>
                       )}
                     </div>
@@ -223,6 +237,7 @@ const Navbar = () => {
                 </MenuItems>
               </Menu>
 
+              {/* Activities (formerly Prompt Exercises) */}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton
@@ -232,7 +247,7 @@ const Navbar = () => {
                         : inactiveLinkClasses
                     } inline-flex items-center`}
                   >
-                    Prompt Exercises
+                    Activities
                     <ChevronDownIcon
                       aria-hidden="true"
                       className="-mr-1 ml-1 size-5"
@@ -267,17 +282,77 @@ const Navbar = () => {
                 </MenuItems>
               </Menu>
 
-              <NavLink
-                to="/prerequisites"
-                className={({ isActive }) =>
-                  `${baseLinkClasses} ${
-                    isActive ? activeLinkClasses : inactiveLinkClasses
-                  }`
-                }
-              >
-                Prerequisites
-              </NavLink>
+              {/* Resources Dropdown */}
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <MenuButton
+                    className={`${baseLinkClasses} ${
+                      isAnyResourceActive
+                        ? activeLinkClasses
+                        : inactiveLinkClasses
+                    } inline-flex items-center`}
+                  >
+                    Resources
+                    <ChevronDownIcon
+                      aria-hidden="true"
+                      className="-mr-1 ml-1 size-5"
+                    />
+                  </MenuButton>
+                </div>
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-20 mt-2 w-64 origin-top-right rounded-md bg-slate-800 dark:bg-slate-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
+                >
+                  <MenuItem>
+                    <Link
+                      to="/tool-comparison"
+                      className={getMenuItemClass("tool-comparison")}
+                    >
+                      Tool Comparison
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      to="/product-rankings"
+                      className={getMenuItemClass("product-rankings")}
+                    >
+                      Product Rankings
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <a
+                      href="https://genai.byu.edu/obtaining-a-chatgpt-edu-license"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={getExternalLinkClass()}
+                    >
+                      ChatGPT License Info
+                    </a>
+                  </MenuItem>
+                  <MenuItem>
+                    <a
+                      href="https://www.byui.edu/genai/products#procurement-guidelines"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={getExternalLinkClass()}
+                    >
+                      Procurement Guidelines
+                    </a>
+                  </MenuItem>
+                  <MenuItem>
+                    <a
+                      href="https://www.byui.edu/genai/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={getExternalLinkClass()}
+                    >
+                      Privacy
+                    </a>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
 
+              {/* About */}
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
@@ -289,6 +364,7 @@ const Navbar = () => {
                 About
               </NavLink>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </div>

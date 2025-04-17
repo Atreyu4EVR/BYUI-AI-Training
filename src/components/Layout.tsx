@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { useTheme } from "../context/ThemeContext";
 
 // Define props interface with children
@@ -21,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     >
       <Navbar />
       <main className="flex-grow">{children || <Outlet />}</main>
-      {/* Optional: Add a footer here */}
+      <Footer />
     </div>
   );
 };

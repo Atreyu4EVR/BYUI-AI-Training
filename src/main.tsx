@@ -14,6 +14,7 @@ import Moderate from "./components/Moderate";
 import Comprehensive from "./components/Comprehensive";
 import GettingStarted from "./components/GettingStarted";
 import ToolComparison from "./components/ToolComparison";
+import ProductRankings from "./components/ProductRankings";
 import "./index.css";
 
 // Using HashRouter for GitHub Pages compatibility
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="how-it-works" element={<HowItWorks />} />
             <Route path="getting-started" element={<GettingStarted />} />
             <Route path="tool-comparison" element={<ToolComparison />} />
+            <Route path="product-rankings" element={<ProductRankings />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="minimal" element={<Minimal />} />
             <Route path="moderate" element={<Moderate />} />
@@ -60,6 +62,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route
               path="tool-comparison.html"
               element={<Navigate to="/tool-comparison" replace />}
+            />
+            <Route
+              path="product-rankings.html"
+              element={<Navigate to="/product-rankings" replace />}
             />
             <Route
               path="about.html"

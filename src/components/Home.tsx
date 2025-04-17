@@ -185,6 +185,12 @@ const Home = () => {
                 >
                   • How Generative AI Works
                 </Link>
+                <Link
+                  to="/tool-comparison"
+                  className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
+                >
+                  • AI Tool Comparison
+                </Link>
               </div>
             </div>
 

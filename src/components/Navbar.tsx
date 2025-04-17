@@ -59,6 +59,7 @@ const Navbar = () => {
     "capabilities",
     "how-it-works",
     "getting-started",
+    "tool-comparison",
   ]);
 
   const toggleSubmenu = (menu: string) => {
@@ -171,6 +172,14 @@ const Navbar = () => {
                               className={getMenuItemClass("how-it-works")}
                             >
                               How It Works
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/tool-comparison"
+                              className={getMenuItemClass("tool-comparison")}
+                            >
+                              Tool Comparison
                             </Link>
                           </MenuItem>
                         </div>

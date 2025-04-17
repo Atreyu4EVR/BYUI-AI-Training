@@ -1,57 +1,73 @@
-# React Context Activities
+# BYU-Idaho AI Training for Administrators
 
-This project displays two interactive React components demonstrating AI prompt context levels.
+This project is an interactive training site designed to equip BYU-Idaho administrators and staff with practical AI knowledge and skills to enhance their effectiveness and productivity while upholding the university's values and standards.
 
-Built with React, TypeScript, Vite, and Tailwind CSS.
+## Project Overview
 
-## Project Setup
+The training site covers:
 
-1.  **Install Dependencies:**
-    ```bash
-    npm install
-    ```
+- **AI Fundamentals**: History, capabilities, and how generative AI works
+- **Practical Applications**: Real-world administrative tasks ideal for AI assistance
+- **Effective Use Skills**: Crafting effective prompts with context levels (minimal, moderate, comprehensive)
+- **BYU-Idaho AI Guidelines**: Official guidance on approved tools and data usage
+
+Built with React, TypeScript, Vite, and Tailwind CSS, with full support for both light and dark modes.
+
+## Setup Instructions
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone [repository-url]
+   cd Training-BYUI-Administrators
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal) to view it in the browser.
 
 ## Available Scripts
 
-In the project directory, you can run:
-
 ### `npm run dev`
 
-Runs the app in development mode.
-Open [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal) to view it in the browser.
-
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+Runs the app in development mode with hot-reloading enabled.
 
 ### `npm run build`
 
-Builds the app for production to the `dist` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+Builds the app for production to the `dist` folder, optimized for performance.
 
 ### `npm run preview`
 
-Serves the production build locally from the `dist` folder. Useful for checking the build before deploying.
+Serves the production build locally for testing before deployment.
 
-## Deployment to GitHub Pages
+## Project Structure
 
-1.  **Update `vite.config.ts`:** Change the `base` property from `'/your-repo-name/'` to match your GitHub repository name (e.g., `'/my-context-app/'`).
-2.  **Build the project:**
-    ```bash
-    npm run build
-    ```
-3.  **Commit and push:** Add the `dist` directory to your commit (remove `dist` from `.gitignore` if you want to commit the build output directly) or set up a GitHub Action to build and deploy.
-4.  **Configure GitHub Pages:** In your repository settings under "Pages", select the branch and folder (usually `gh-pages` branch or `/docs` or `/ (root)` on the main branch if you committed the `dist` folder contents) to deploy from.
+- **Lesson One**: Covers AI fundamentals, history, capabilities, and how generative AI works
+- **Prompt Exercises**: Interactive examples of minimal, moderate, and comprehensive prompting techniques
+- **Prerequisites**: Setup guide for necessary accounts (ChatGPT)
+- **About**: Information about the training initiative and BYU-Idaho AI guidelines
 
-    - **Using GitHub Actions (Recommended):** Search for a Vite GitHub Pages deployment action in the GitHub Marketplace for an automated workflow.
-    - **Manual Deployment:** You can use tools like `gh-pages` (`npm install --save-dev gh-pages`) and add a deploy script to `package.json`:
-      ```json
-      "scripts": {
-        // ... other scripts
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d dist"
-      }
-      ```
-      Then run `npm run deploy`.
+## Deployment
+
+The site is configured to be deployed as a GitHub Pages site with proper routing.
+
+1. **Build the project:**
+
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy using GitHub Actions:**
+   The repository includes a GitHub Actions workflow that automatically builds and deploys the site when changes are pushed to the main branch.
+
+## Additional Resources
+
+For more information about BYU-Idaho's AI guidelines, please visit the [official BYU-Idaho GenAI website](https://www.byui.edu/genai/).

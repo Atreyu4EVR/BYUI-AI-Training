@@ -6,18 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found</title>
     <script>
-        // GitHub Pages SPA hack: redirect 404s to index.html with the original path
-        const pathSegmentsToKeep = 0; // Adjust this if your app is in a subdirectory
-        const loc = window.location;
-        const newUrl = `${loc.protocol}//${loc.hostname}${loc.port ? ':' + loc.port : ''}${pathSegmentsToKeep ? loc.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') : ''
-            }/index.html?p=${loc.pathname.split('/').slice(pathSegmentsToKeep).join('/')}${loc.search}${loc.hash}`;
-        window.location.replace(newUrl);
+        // Single Page App GitHub Pages routing hack
+        // Get the repository name from the URL
+        const repoName = location.pathname.split('/')[1];
+        const segmentCount = repoName ? 1 : 0; // Subtract 1 if there's a repo name
+
+        // Extract the path after the repository name
+        const path = location.pathname
+            .split('/')
+            .slice(segmentCount + 1)
+            .join('/');
+
+        // Construct the redirect URL
+        const redirectUrl =
+            location.origin +
+            (repoName ? '/' + repoName : '') +
+            '/index.html?p=' +
+            encodeURIComponent(path || '') +
+            (location.search ? '&' + location.search.slice(1) : '') +
+            location.hash;
+
+        // Redirect to the index page
+        window.location.replace(redirectUrl);
     </script>
 </head>
 
 <body>
-    <h1>Redirecting...</h1>
-    <p>If you are not redirected automatically, <a href="index.html">click here</a>.</p>
+    <div
+        style="text-align: center; padding: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <h1>Redirecting...</h1>
+        <p>If you are not redirected automatically, <a href="index.html">click here</a>.</p>
+    </div>
 </body>
 
 </html>

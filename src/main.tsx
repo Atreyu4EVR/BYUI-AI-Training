@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
@@ -15,13 +15,11 @@ import Comprehensive from "./components/Comprehensive";
 import GettingStarted from "./components/GettingStarted";
 import "./index.css";
 
-// Get the base URL from Vite config
-const base = import.meta.env.BASE_URL || "/";
-
+// Using HashRouter for GitHub Pages compatibility
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
-      <BrowserRouter basename={base}>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -83,7 +81,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                   <p className="mb-4">
                     Sorry, the page you are looking for doesn't exist.
                   </p>
-                  <a href="/" className="text-blue-500 hover:underline">
+                  <a
+                    href="#/"
+                    className="text-cyan-600 hover:underline dark:text-cyan-400"
+                  >
                     Return to Home
                   </a>
                 </div>
@@ -91,7 +92,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   </React.StrictMode>
 );

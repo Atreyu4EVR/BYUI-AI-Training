@@ -30,9 +30,9 @@ const Navbar = () => {
   const getMenuItemClass = (path: string) => {
     const baseMenuItemClasses =
       "block w-full px-4 py-2 text-left text-sm transition-colors duration-150";
-    const activeMenuItemClasses = "bg-slate-600 text-white dark:bg-slate-500";
+    const activeMenuItemClasses = "bg-white/20 text-white";
     const inactiveMenuItemClasses =
-      "text-slate-200 hover:bg-slate-700 hover:text-white dark:hover:bg-slate-500";
+      "text-white hover:bg-white/10 hover:text-white";
 
     const isActive =
       currentPath === path ||
@@ -46,7 +46,7 @@ const Navbar = () => {
 
   // Helper for external links
   const getExternalLinkClass = () => {
-    return "block w-full px-4 py-2 text-left text-sm text-slate-200 hover:bg-slate-700 hover:text-white dark:hover:bg-slate-500 transition-colors duration-150";
+    return "block w-full px-4 py-2 text-left text-sm text-white hover:bg-white/10 hover:text-white transition-colors duration-150";
   };
 
   // Helper for submenu headers
@@ -54,7 +54,7 @@ const Navbar = () => {
     const baseClass =
       "block w-full px-4 py-2 text-left text-sm font-medium flex justify-between items-center";
     return `${baseClass} ${
-      isActive ? "text-white" : "text-slate-200 hover:text-white"
+      isActive ? "text-white bg-white/20" : "text-white hover:bg-white/10"
     }`;
   };
 
@@ -81,7 +81,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-slate-800 shadow-md dark:bg-slate-900 w-full">
+    <nav className="navbar shadow-md w-full">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
@@ -100,7 +100,7 @@ const Navbar = () => {
                 to="/"
                 className={({ isActive }) =>
                   `${baseLinkClasses} ${
-                    isActive ? activeLinkClasses : inactiveLinkClasses
+                    isActive ? "bg-white/20 text-white" : "navbar-link"
                   }`
                 }
               >
@@ -112,7 +112,7 @@ const Navbar = () => {
                 to="/prerequisites"
                 className={({ isActive }) =>
                   `${baseLinkClasses} ${
-                    isActive ? activeLinkClasses : inactiveLinkClasses
+                    isActive ? "bg-white/20 text-white" : "navbar-link"
                   }`
                 }
               >
@@ -125,8 +125,8 @@ const Navbar = () => {
                   <MenuButton
                     className={`${baseLinkClasses} ${
                       isAnyLessonActive
-                        ? activeLinkClasses
-                        : inactiveLinkClasses
+                        ? "bg-white/20 text-white"
+                        : "navbar-link"
                     } inline-flex items-center`}
                   >
                     Lessons
@@ -138,7 +138,7 @@ const Navbar = () => {
                 </div>
                 <MenuItems
                   transition
-                  className="absolute left-0 md:left-auto md:right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-slate-800 dark:bg-slate-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
+                  className="absolute left-0 md:left-auto md:right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                 >
                   {/* Lesson One Submenu */}
                   <Fragment>
@@ -163,7 +163,7 @@ const Navbar = () => {
                       </button>
 
                       {activeSubmenu === "lessonOne" && (
-                        <div className="pl-2 border-l border-slate-600 ml-4 mt-1">
+                        <div className="pl-2 border-l border-byui-dark-border ml-4 mt-1">
                           <MenuItem>
                             <Link
                               to="/getting-started"
@@ -207,11 +207,11 @@ const Navbar = () => {
                       <button
                         className={`${getSubmenuHeaderClass(
                           false
-                        )} text-slate-400 cursor-not-allowed`}
+                        )} text-white/60 cursor-not-allowed`}
                         disabled
                       >
                         <span>Lesson Two</span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-white/50">
                           (Coming Soon)
                         </span>
                       </button>
@@ -224,11 +224,11 @@ const Navbar = () => {
                       <button
                         className={`${getSubmenuHeaderClass(
                           false
-                        )} text-slate-400 cursor-not-allowed`}
+                        )} text-white/60 cursor-not-allowed`}
                         disabled
                       >
                         <span>Lesson Three</span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-white/50">
                           (Coming Soon)
                         </span>
                       </button>
@@ -243,8 +243,8 @@ const Navbar = () => {
                   <MenuButton
                     className={`${baseLinkClasses} ${
                       isPathActive(["minimal", "moderate", "comprehensive"])
-                        ? activeLinkClasses
-                        : inactiveLinkClasses
+                        ? "bg-white/20 text-white"
+                        : "navbar-link"
                     } inline-flex items-center`}
                   >
                     Activities
@@ -256,7 +256,7 @@ const Navbar = () => {
                 </div>
                 <MenuItems
                   transition
-                  className="absolute right-0 z-20 mt-2 w-48 origin-top-right rounded-md bg-slate-800 dark:bg-slate-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
+                  className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                 >
                   <MenuItem>
                     <Link to="/minimal" className={getMenuItemClass("minimal")}>
@@ -288,8 +288,8 @@ const Navbar = () => {
                   <MenuButton
                     className={`${baseLinkClasses} ${
                       isAnyResourceActive
-                        ? activeLinkClasses
-                        : inactiveLinkClasses
+                        ? "bg-white/20 text-white"
+                        : "navbar-link"
                     } inline-flex items-center`}
                   >
                     Resources
@@ -301,7 +301,7 @@ const Navbar = () => {
                 </div>
                 <MenuItems
                   transition
-                  className="absolute right-0 z-20 mt-2 w-64 origin-top-right rounded-md bg-slate-800 dark:bg-slate-700 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
+                  className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                 >
                   <MenuItem>
                     <Link
@@ -357,14 +357,16 @@ const Navbar = () => {
                 to="/about"
                 className={({ isActive }) =>
                   `${baseLinkClasses} ${
-                    isActive ? activeLinkClasses : inactiveLinkClasses
+                    isActive ? "bg-white/20 text-white" : "navbar-link"
                   }`
                 }
               >
                 About
               </NavLink>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center justify-center">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>

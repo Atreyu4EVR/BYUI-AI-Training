@@ -9,166 +9,214 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  body {
+    @apply bg-byui-light-background dark:bg-byui-dark-background text-byui-light-text-primary dark:text-byui-dark-text-primary;
+  }
+
   /* Default text links in dark mode */
   .dark a:not([class]) {
-    @apply text-cyan-400 hover:text-cyan-300;
+    @apply text-byui-dark-accent-cyan hover:text-blue-400;
   }
 
   /* Background colors for cards in dark mode */
   .dark .bg-white {
-    @apply bg-slate-800;
+    @apply bg-byui-dark-card;
   }
 
-  /* Text colors in dark mode */
-  .dark .text-slate-900 {
-    @apply text-slate-100;
+  /* Card and section backgrounds */
+  .bg-white {
+    @apply bg-byui-light-background dark:bg-byui-dark-card;
   }
 
-  .dark .text-slate-800 {
-    @apply text-slate-200;
+  .bg-slate-50 {
+    @apply bg-byui-light-card dark:bg-byui-dark-card bg-opacity-80;
   }
 
-  .dark .text-slate-700 {
-    @apply text-slate-300;
+  /* Text colors overrides */
+  .text-slate-900 {
+    @apply text-byui-light-text-primary dark:text-byui-dark-text-primary;
   }
 
-  .dark .text-slate-600 {
-    @apply text-slate-400;
+  .text-slate-800 {
+    @apply text-byui-light-text-primary dark:text-byui-dark-text-primary;
   }
 
-  .dark .text-slate-500 {
-    @apply text-slate-400;
+  .text-slate-700 {
+    @apply text-byui-light-text-primary dark:text-byui-dark-text-secondary;
+  }
+
+  .text-slate-600 {
+    @apply text-byui-light-text-secondary dark:text-byui-dark-text-secondary;
+  }
+
+  .text-slate-500 {
+    @apply text-byui-light-text-secondary dark:text-byui-dark-text-secondary;
+  }
+
+  /* Border colors */
+  .border-slate-200 {
+    @apply border-byui-light-border dark:border-byui-dark-border;
   }
 
   /* Timeline text colors - improved contrast for dark mode */
   .dark .history-timeline h2,
   .dark .history-timeline h3 {
-    @apply text-white;
+    @apply text-byui-dark-text-primary;
   }
 
   .dark .history-timeline p {
-    @apply text-slate-200;
+    @apply text-byui-dark-text-secondary;
   }
 
   /* Timeline special elements - improve contrast */
   .dark .timeline-circle {
-    @apply border-slate-400;
+    @apply border-byui-dark-border;
   }
 
   .dark .timeline-year {
-    @apply text-white font-medium;
+    @apply text-byui-dark-text-primary font-medium;
   }
 
   /* Dark purple/highlight circles should have better contrast text */
-  .dark .bg-purple-600 .timeline-year,
-  .dark .bg-indigo-600 .timeline-year,
-  .dark .bg-blue-600 .timeline-year,
-  .dark .bg-green-600 .timeline-year,
-  .dark .bg-orange-500 .timeline-year,
-  .dark .bg-red-600 .timeline-year,
+  .dark .bg-purple-600 .timeline-year {
+    @apply text-white font-bold;
+  }
+
+  .dark .bg-indigo-600 .timeline-year {
+    @apply text-white font-bold;
+  }
+
+  .dark .bg-blue-600 .timeline-year {
+    @apply text-white font-bold;
+  }
+
+  .dark .bg-green-600 .timeline-year {
+    @apply text-white font-bold;
+  }
+
+  .dark .bg-orange-500 .timeline-year {
+    @apply text-white font-bold;
+  }
+
+  .dark .bg-red-600 .timeline-year {
+    @apply text-white font-bold;
+  }
+
   .dark .bg-teal-600 .timeline-year {
     @apply text-white font-bold;
   }
 
+  /* Updated accent colors for timeline elements in dark mode */
+  .dark .bg-purple-600 {
+    @apply bg-byui-dark-accent-purple;
+  }
+
+  .dark .bg-blue-600 {
+    @apply bg-byui-brand-blue-2;
+  }
+
+  .dark .bg-green-600 {
+    @apply bg-byui-dark-accent-green;
+  }
+
+  .dark .bg-red-600 {
+    @apply bg-byui-dark-accent-red;
+  }
+
+  .dark .bg-orange-500 {
+    @apply bg-byui-brand-orange-2;
+  }
+
+  .dark .bg-teal-600 {
+    @apply bg-byui-dark-accent-cyan;
+  }
+
   /* Improved contrast for timeline content cards */
   .dark .timeline-content .bg-slate-50 {
-    @apply bg-slate-800 border-slate-700;
+    @apply bg-byui-dark-card border-byui-dark-border;
   }
 
   .dark .timeline-content .text-slate-600 {
-    @apply text-slate-300;
+    @apply text-byui-dark-text-secondary;
   }
 
   /* Timeline vertical line in dark mode */
   .dark .history-timeline .bg-slate-200 {
-    @apply bg-slate-600;
+    @apply bg-byui-dark-border;
   }
 
   /* Non-featured milestone background in dark mode */
   .dark .timeline-circle.bg-slate-200 {
-    @apply bg-slate-600;
+    @apply bg-byui-dark-border;
   }
 
   .dark .timeline-circle.bg-slate-200 .timeline-year {
-    @apply text-white;
-  }
-
-  /* Border colors in dark mode */
-  .dark .border-slate-200 {
-    @apply border-slate-700;
+    @apply text-byui-dark-text-primary;
   }
 
   /* Shadow styling for dark mode */
   .dark .shadow-sm {
-    @apply shadow-slate-900/30;
-  }
-
-  /* Card and section backgrounds for dark mode */
-  .dark .bg-slate-50 {
-    @apply bg-slate-700;
+    @apply shadow-black/30;
   }
 
   /* New dark mode styling for callout sections */
   /* Amber callouts */
   .dark .bg-amber-50 {
-    background-color: rgba(180, 83, 9, 0.2); /* amber-800 with opacity */
-    color: #f1f5f9; /* slate-100 */
+    @apply bg-byui-dark-background/80;
     border-radius: 0.375rem; /* rounded-md */
   }
 
   /* Fix border colors with direct CSS properties to avoid circular dependencies */
   .dark .border-amber-500 {
-    border-color: #d97706; /* amber-600 */
+    @apply border-byui-brand-yellow;
   }
 
   .dark .text-amber-800,
   .dark .text-slate-800.dark\:text-amber-100 {
-    color: #fbbf24; /* amber-400 */
+    @apply text-byui-brand-yellow;
   }
 
   .dark .text-amber-700,
   .dark .text-slate-700.dark\:text-amber-50 {
-    color: #fef3c7; /* amber-50 */
+    @apply text-byui-dark-text-primary;
   }
 
   /* Cyan callouts */
   .dark .bg-cyan-50 {
-    background-color: rgba(8, 145, 178, 0.2); /* cyan-700 with opacity */
-    color: #f1f5f9; /* slate-100 */
+    @apply bg-byui-dark-background/80;
     border-radius: 0.375rem; /* rounded-md */
   }
 
   /* Use direct CSS properties to avoid circular dependencies */
   .dark .border-cyan-500 {
-    border-color: #06b6d4; /* cyan-500 */
+    @apply border-byui-dark-accent-cyan;
   }
 
   .dark .text-cyan-800 {
-    color: #22d3ee; /* cyan-400 */
+    @apply text-byui-dark-accent-cyan;
   }
 
   .dark .text-cyan-700 {
-    color: #ecfeff; /* cyan-50 */
+    @apply text-byui-dark-text-primary;
   }
 
   /* Green callouts */
   .dark .bg-green-50 {
-    background-color: rgba(22, 101, 52, 0.2); /* green-800 with opacity */
-    color: #f1f5f9; /* slate-100 */
+    @apply bg-byui-dark-background/80;
     border-radius: 0.375rem; /* rounded-md */
   }
 
   /* Use direct CSS properties to avoid circular dependencies */
   .dark .border-green-500 {
-    border-color: #10b981; /* emerald-500 */
+    @apply border-byui-dark-accent-green;
   }
 
   .dark .text-green-800 {
-    color: #4ade80; /* green-400 */
+    @apply text-byui-dark-accent-green;
   }
 
   .dark .text-green-700 {
-    color: #f0fdf4; /* green-50 */
+    @apply text-byui-dark-text-primary;
   }
 
   /* Improve disabled/placeholder elements contrast */
@@ -180,25 +228,101 @@
   .dark input,
   .dark textarea,
   .dark select {
-    @apply bg-slate-700 border-slate-600 text-slate-200;
+    @apply bg-byui-dark-card border-byui-dark-border text-byui-dark-text-primary;
   }
 
   /* Improve hover states on cards in dark mode */
   .dark .hover\:shadow-md:hover {
-    @apply shadow-slate-900/50;
+    @apply shadow-black/50;
   }
 
   /* Custom color adjustments for links and buttons in dark mode */
   .dark .dark\:hover\:bg-slate-600:hover {
-    @apply bg-slate-600;
+    @apply bg-byui-dark-card;
   }
 
-  /* Fix contrast for colored borders in dark mode by using direct CSS to avoid circular dependencies */
+  /* Fix contrast for colored borders in dark mode */
   .dark .hover\:border-cyan-300:hover {
-    border-color: #0ea5e9; /* cyan-500 */
+    @apply border-byui-dark-accent-cyan;
   }
 
   .dark .hover\:border-emerald-300:hover {
-    border-color: #10b981; /* emerald-500 */
+    @apply border-byui-dark-accent-green;
+  }
+
+  /* Link styling */
+  .text-cyan-700 {
+    @apply text-byui-dark-blue;
+  }
+
+  .hover\:text-cyan-600:hover {
+    @apply hover:text-byui-brand-blue-2;
+  }
+
+  .dark .text-cyan-400 {
+    @apply text-byui-dark-accent-cyan;
+  }
+
+  .dark .hover\:text-cyan-300:hover {
+    @apply hover:text-blue-400;
+  }
+
+  /* Highlight text */
+  .dark .text-byui-dark-text-highlight {
+    color: #4f9acf; /* Use the exact hex value from your config */
+  }
+}
+
+/* Add navbar styling to use the BYU-Idaho blue in light mode */
+@layer components {
+  .navbar {
+    @apply bg-byui-light-navbar dark:bg-byui-dark-navbar text-white dark:text-byui-dark-text-primary;
+  }
+
+  .navbar-link {
+    @apply text-white hover:text-slate-100 dark:text-byui-dark-text-primary dark:hover:text-byui-dark-text-secondary transition-colors duration-200;
+  }
+
+  .navbar-button {
+    @apply bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  /* For a contrasting navbar item in light mode */
+  .navbar-highlight {
+    @apply bg-white text-byui-light-navbar hover:bg-slate-100 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  /* Add new accent button styles based on the brand colors */
+  .btn-primary {
+    @apply bg-byui-dark-blue text-white hover:bg-byui-brand-blue-2 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-byui-brand-blue-2 text-white hover:bg-byui-brand-blue-3 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  .btn-accent-purple {
+    @apply bg-byui-dark-accent-purple text-white hover:bg-purple-600 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  .btn-accent-cyan {
+    @apply bg-byui-dark-accent-cyan text-white hover:bg-cyan-600 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  .btn-accent-green {
+    @apply bg-byui-dark-accent-green text-white hover:bg-green-600 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  .btn-accent-red {
+    @apply bg-byui-dark-accent-red text-white hover:bg-red-600 px-4 py-2 rounded-md transition-colors duration-200;
+  }
+
+  /* Card components with the new BYUI theme */
+  .card {
+    @apply bg-byui-light-background dark:bg-byui-dark-card rounded-lg border border-byui-light-border dark:border-byui-dark-border shadow-sm p-6;
+  }
+
+  .card-highlight {
+    @apply bg-byui-light-card dark:bg-byui-dark-card rounded-lg border-l-4 border-byui-dark-blue dark:border-byui-brand-blue-2 shadow-sm p-6;
   }
 }

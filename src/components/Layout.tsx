@@ -2,7 +2,9 @@ import React, { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import LessonNavigation from "./LessonNavigation";
 import { useTheme } from "../context/ThemeContext";
+import { useLocation } from "react-router-dom";
 
 // Define props interface with children
 interface LayoutProps {
@@ -11,6 +13,19 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { theme } = useTheme();
+  const location = useLocation();
+
+  // Determine if the current route is a lesson page
+  const isLessonPage = [
+    "/getting-started",
+    "/history",
+    "/capabilities",
+    "/how-it-works",
+    "/tool-comparison",
+    "/minimal",
+    "/moderate",
+    "/comprehensive",
+  ].includes(location.pathname);
 
   return (
     <div
@@ -21,6 +36,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       }`}
     >
       <Navbar />
+      {isLessonPage && <LessonNavigation currentPath={location.pathname} />}
       <main className="flex-grow">{children || <Outlet />}</main>
       <Footer />
     </div>

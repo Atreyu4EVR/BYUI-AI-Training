@@ -10,31 +10,13 @@ const GettingStarted = () => {
             Getting Started with AI
           </h1>
           <p className="text-lg text-slate-600">
-            Welcome to your introduction to artificial intelligence at BYU-Idaho
-          </p>
-        </header>
-
-        {/* Welcome & Introduction */}
-        <section className="mb-10 bg-cyan-50 p-6 rounded-lg border-l-4 border-cyan-500">
-          <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-            <Users className="mr-2 text-cyan-500" />
-            Welcome to AI Training
-          </h2>
-          <p className="text-slate-700 mb-4">
             Welcome to our AI training program designed specifically for
             BYU-Idaho administrators. Whether you're curious about AI or feeling
             a bit uncertain about its relevance to your work, this training will
             provide you with a solid foundation and practical skills for using
             AI tools effectively in your administrative role.
           </p>
-          <p className="text-slate-700">
-            Our goal is to demystify artificial intelligence, demonstrate its
-            practical applications in university administration, and help you
-            develop confidence in using approved AI tools like ChatGPT,
-            Microsoft Copilot, and Google Gemini in ways that align with
-            BYU-Idaho's values and AI guidelines.
-          </p>
-        </section>
+        </header>
 
         {/* What You'll Learn */}
         <section className="mb-10">
@@ -70,19 +52,6 @@ const GettingStarted = () => {
               </p>
             </div>
           </div>
-
-          <div className="bg-slate-50 p-5 rounded-lg">
-            <h3 className="font-bold text-slate-800 mb-2 flex items-center">
-              <Star className="mr-2 text-yellow-500" size={20} />
-              Hands-On AI Prompting Exercises
-            </h3>
-            <p className="text-slate-700">
-              Throughout this lesson, you'll practice using AI tools with guided
-              exercises specifically designed for university administrative
-              tasks. These exercises will help you develop practical skills you
-              can immediately apply to your work.
-            </p>
-          </div>
         </section>
 
         {/* How to Navigate this Training */}
@@ -105,9 +74,8 @@ const GettingStarted = () => {
                 </div>
                 <div>
                   <p className="text-slate-700">
-                    <strong>Follow the sequence:</strong> Start with History,
-                    then explore Capabilities, and finally learn How AI Works
-                    for a comprehensive understanding.
+                    <strong>Follow the sequence:</strong> Use the navigation
+                    buttons at the top of the page to move through the lessons.
                   </p>
                 </div>
               </div>
@@ -182,86 +150,6 @@ const GettingStarted = () => {
                 BYU-Idaho administrators regardless of your previous experience
                 with technology.
               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Why This Matters */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-            <Lightbulb className="mr-2 text-yellow-500" />
-            Why This Matters for BYU-Idaho Administrators
-          </h2>
-
-          <div className="bg-white p-5 rounded-lg shadow-md">
-            <p className="text-slate-700 mb-4">
-              AI tools are rapidly transforming administrative work across
-              higher education. At BYU-Idaho, we recognize the potential for
-              these tools to enhance our service to students and support our
-              university's mission when used appropriately.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-slate-50 p-4 rounded-lg">
-                <h3 className="font-bold text-slate-800 mb-2">Efficiency</h3>
-                <p className="text-slate-700">
-                  Reduce time spent on routine tasks like drafting emails,
-                  summarizing documents, and organizing information.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-lg">
-                <h3 className="font-bold text-slate-800 mb-2">
-                  Improved Service
-                </h3>
-                <p className="text-slate-700">
-                  Respond more quickly and effectively to student and faculty
-                  needs with AI-assisted communication.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-lg">
-                <h3 className="font-bold text-slate-800 mb-2">
-                  Better Decision-Making
-                </h3>
-                <p className="text-slate-700">
-                  Analyze and synthesize information more effectively to support
-                  informed administrative decisions.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 p-4 rounded-lg">
-                <h3 className="font-bold text-slate-800 mb-2">
-                  Mission Alignment
-                </h3>
-                <p className="text-slate-700">
-                  Use technology thoughtfully to enhance our ability to support
-                  student growth and development.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Let's Begin */}
-        <section className="mb-6">
-          <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
-            <h2 className="text-xl font-semibold text-slate-800 mb-2">
-              Let's Begin Our AI Journey
-            </h2>
-            <p className="text-slate-700">
-              Ready to start exploring the world of artificial intelligence?
-              Let's begin with a journey through the history of AI to understand
-              how we arrived at today's powerful tools and what that means for
-              our work at BYU-Idaho.
-            </p>
-            <div className="mt-4">
-              <a
-                href="/history"
-                className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300"
-              >
-                Continue to AI History
-              </a>
             </div>
           </div>
         </section>

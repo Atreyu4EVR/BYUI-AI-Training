@@ -40,6 +40,7 @@ const Prerequisites = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200"
+                aria-label="ChatGPT login page (opens in a new tab)"
               >
                 chatgpt.com/auth/login
               </a>{" "}

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Home = () => {
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
@@ -133,12 +135,12 @@ const Home = () => {
           <p className="text-slate-700 dark:text-slate-100">
             Please ensure you have completed the necessary setup steps outlined
             on the{" "}
-            <a
-              href="/prerequisites"
+            <Link
+              to="/prerequisites"
               className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200 dark:text-indigo-300 dark:hover:text-indigo-200"
             >
               Prerequisites page
-            </a>{" "}
+            </Link>{" "}
             before diving into the lessons or exercises.
           </p>
         </div>
@@ -159,30 +161,30 @@ const Home = () => {
                 Artificial Intelligence.
               </p>
               <div className="space-y-2 border-t pt-4">
-                <a
-                  href="/getting-started"
+                <Link
+                  to="/getting-started"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • Getting Started
-                </a>
-                <a
-                  href="/history"
+                </Link>
+                <Link
+                  to="/history"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • History of AI
-                </a>
-                <a
-                  href="/capabilities"
+                </Link>
+                <Link
+                  to="/capabilities"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • AI Capabilities & Tasks
-                </a>
-                <a
-                  href="/how-it-works"
+                </Link>
+                <Link
+                  to="/how-it-works"
                   className="block text-cyan-700 font-medium hover:text-cyan-600 text-sm"
                 >
                   • How Generative AI Works
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -217,8 +219,8 @@ const Home = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Minimal Context Card */}
-            <a
-              href="/minimal"
+            <Link
+              to="/minimal"
               className="group block p-6 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-cyan-300 transition-all duration-300"
             >
               <h3 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-cyan-700 transition-colors duration-200">
@@ -227,11 +229,11 @@ const Home = () => {
               <p className="text-slate-600 text-sm">
                 See the results of a basic, low-detail prompt.
               </p>
-            </a>
+            </Link>
 
             {/* Moderate Context Card */}
-            <a
-              href="/moderate"
+            <Link
+              to="/moderate"
               className="group block p-6 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-cyan-300 transition-all duration-300"
             >
               <h3 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-cyan-700 transition-colors duration-200">
@@ -240,11 +242,11 @@ const Home = () => {
               <p className="text-slate-600 text-sm">
                 Explore adding more specific details.
               </p>
-            </a>
+            </Link>
 
             {/* Comprehensive Context Card */}
-            <a
-              href="/comprehensive"
+            <Link
+              to="/comprehensive"
               className="group block p-6 bg-white rounded-lg border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all duration-300"
             >
               <h3 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-emerald-700 transition-colors duration-200">
@@ -253,18 +255,18 @@ const Home = () => {
               <p className="text-slate-600 text-sm">
                 Observe the output with detailed instructions.
               </p>
-            </a>
+            </Link>
           </div>
         </div>
 
         {/* About Section Link */}
         <div className="border-t border-slate-200 pt-8 text-center">
-          <a
-            href="/about"
+          <Link
+            to="/about"
             className="text-cyan-700 font-medium hover:text-cyan-600 transition-colors duration-200 text-sm"
           >
             About
-          </a>
+          </Link>
         </div>
       </div>
     </div>

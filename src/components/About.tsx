@@ -326,6 +326,7 @@ const AboutPage = () => {
               className="text-cyan-700 hover:underline dark:text-cyan-400"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="BYU-Idaho GenAI website (opens in a new tab)"
             >
               BYU-Idaho GenAI website
             </a>

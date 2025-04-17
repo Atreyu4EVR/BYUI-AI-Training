@@ -1,8 +1,11 @@
-import React from "react";
 import ModerateContextExercise from "./moderate-context-activity";
 
 const Moderate = () => {
-  return <ModerateContextExercise />;
+  return (
+    <div>
+      <ModerateContextExercise />
+    </div>
+  );
 };
 
 export default Moderate;

@@ -1,8 +1,11 @@
-import React from "react";
 import MinimalContextExercise from "./minimal-context-activity";
 
 const Minimal = () => {
-  return <MinimalContextExercise />;
+  return (
+    <div>
+      <MinimalContextExercise />
+    </div>
+  );
 };
 
 export default Minimal;

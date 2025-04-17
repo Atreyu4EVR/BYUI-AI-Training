@@ -44,13 +44,6 @@ const Navbar = () => {
     }`;
   };
 
-  // Helper for placeholder menu items
-  const getPlaceholderMenuItemClass = () => {
-    const baseMenuItemClasses =
-      "block w-full px-4 py-2 text-left text-sm transition-colors duration-150";
-    return `${baseMenuItemClasses} text-slate-400 cursor-not-allowed`;
-  };
-
   // Helper for submenu headers
   const getSubmenuHeaderClass = (isActive: boolean) => {
     const baseClass =

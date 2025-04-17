@@ -1,13 +1,14 @@
-import React from "react"; // Keeping React import
 import {
-  FileText,
-  Image,
+  Lightbulb,
+  Eye,
+  Ear,
   Mic,
-  Layers,
-  Zap,
-  Brain,
-  Check,
+  MessageSquare,
+  FileText,
+  Upload,
+  Search,
   AlertTriangle,
+  Check,
 } from "lucide-react";
 
 const Capabilities = () => {
@@ -45,7 +46,7 @@ const Capabilities = () => {
     },
     {
       title: "Vision-Based AI",
-      icon: <Image size={36} className="text-green-600" />,
+      icon: <Eye size={36} className="text-green-600" />,
       description:
         "Systems that analyze, understand, and generate visual information.",
       color: "bg-green-50 border-green-500", // Adjusted colors
@@ -75,7 +76,7 @@ const Capabilities = () => {
     },
     {
       title: "Audio-Based AI",
-      icon: <Mic size={36} className="text-purple-600" />,
+      icon: <Ear size={36} className="text-purple-600" />,
       description:
         "Systems that process, understand, generate, or transform audio data.",
       color: "bg-purple-50 border-purple-500", // Adjusted colors
@@ -105,7 +106,7 @@ const Capabilities = () => {
     },
     {
       title: "Multimodal AI",
-      icon: <Layers size={36} className="text-orange-600" />,
+      icon: <MessageSquare size={36} className="text-orange-600" />,
       description:
         "Systems that integrate and process information across multiple types of data (text, images, audio, etc.).",
       color: "bg-orange-50 border-orange-500", // Adjusted colors
@@ -196,7 +197,8 @@ const Capabilities = () => {
         {/* Intro Box */}
         <div className="mb-8 bg-cyan-50 p-5 rounded-lg border-l-4 border-cyan-500">
           <h2 className="text-xl font-semibold text-slate-800 mb-2 flex items-center">
-            <Brain className="mr-2 text-cyan-500" /> {/* Adjusted Icon Color */}
+            <Lightbulb className="mr-2 text-cyan-500" />{" "}
+            {/* Adjusted Icon Color */}
             What Makes AI Systems Different?
           </h2>
           <p className="text-slate-700">
@@ -293,7 +295,7 @@ const Capabilities = () => {
                 className="p-5 rounded-lg shadow-sm border-l-4 border-slate-400 bg-slate-50"
               >
                 <h3 className="text-lg font-bold text-slate-800 mb-2 flex items-center">
-                  <Zap className="mr-2 text-slate-500" size={20} />{" "}
+                  <Search className="mr-2 text-slate-500" size={20} />{" "}
                   {/* Adjusted Icon Color */}
                   {task.name}
                 </h3>

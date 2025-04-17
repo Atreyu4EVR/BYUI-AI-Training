@@ -1,12 +1,4 @@
-import React from "react";
-import {
-  BookOpen,
-  Users,
-  Lightbulb,
-  ShieldCheck,
-  Clock,
-  Zap,
-} from "lucide-react";
+import { BookOpen, Users, Lightbulb, ShieldCheck, Clock } from "lucide-react";
 
 const AboutPage = () => {
   return (

@@ -1,8 +1,11 @@
-import React from "react";
 import ComprehensiveContextExercise from "./comprehensive-context-activity";
 
 const Comprehensive = () => {
-  return <ComprehensiveContextExercise />;
+  return (
+    <div>
+      <ComprehensiveContextExercise />
+    </div>
+  );
 };
 
 export default Comprehensive;

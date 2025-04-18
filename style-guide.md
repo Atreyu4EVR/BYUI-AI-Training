@@ -106,6 +106,158 @@
 | Body Text - Regular      | `text-byui-light-text-primary`                        | Standard paragraphs                |
 | Body Text - Small        | `text-sm text-byui-light-text-secondary`              | Supporting text, card descriptions |
 
+## Standardized Component Classes
+
+For consistent page styling, use these standardized component classes defined in index.css. These classes apply appropriate styling through composed Tailwind classes, ensuring visual consistency across all pages.
+
+### Page Structure
+
+Use these classes for the overall page structure:
+
+```jsx
+<div className="page-container">
+  <div className="page-content">
+    <header className="page-header">
+      <h1 className="page-title">Page Title</h1>
+      <p className="page-subtitle">Subtitle or description</p>
+    </header>
+
+    {/* Page content sections */}
+
+    <footer className="page-footer">
+      <p>Footer content</p>
+    </footer>
+  </div>
+</div>
+```
+
+### Section Headers
+
+For consistent section headers:
+
+```jsx
+<h2 className="section-header">
+  <Icon className="mr-2 text-blue-600" /> {/* Icon is optional */}
+  Section Title
+</h2>
+```
+
+Or for a stand-alone section title:
+
+```jsx
+<h2 className="section-title">Section Title</h2>
+```
+
+### Content Sections and Cards
+
+For main content sections:
+
+```jsx
+<section className="content-section">
+  <h2 className="section-title">Section Title</h2>
+  <p className="text-primary">Section content...</p>
+
+  {/* Additional content */}
+</section>
+```
+
+For content cards within sections:
+
+```jsx
+<div className="content-card">
+  <h3 className="card-title">Card Title</h3>
+  <p className="text-small">Card content...</p>
+</div>
+```
+
+For a grid of cards:
+
+```jsx
+<div className="card-grid">
+  <div className="content-card">{/* Card 1 content */}</div>
+  <div className="content-card">{/* Card 2 content */}</div>
+</div>
+```
+
+### Text Styles
+
+Use these text classes:
+
+```jsx
+<p className="text-primary">Primary text for main content</p>
+<p className="text-secondary">Secondary text for supporting info</p>
+<p className="text-small">Small text for notes, captions, etc.</p>
+```
+
+### Special Elements
+
+For notes and callouts:
+
+```jsx
+<div className="note-callout">
+  <p className="text-primary">
+    <strong>Note:</strong> Important information...
+  </p>
+</div>
+```
+
+For warnings:
+
+```jsx
+<div className="warning-callout">
+  <AlertTriangle className="text-yellow-500 mr-3 mt-1 flex-shrink-0" />
+  <div>
+    <h3 className="font-bold text-slate-800 mb-1">Warning Title</h3>
+    <p className="text-small">Warning content...</p>
+  </div>
+</div>
+```
+
+### Topic Cards with Accent Borders
+
+For lesson topic cards:
+
+```jsx
+<div className="topic-card border-cyan-400">
+  <h3 className="card-title">Topic Title</h3>
+  <p className="text-primary">Topic description...</p>
+</div>
+```
+
+### Numbered Lists
+
+For step-by-step instructions:
+
+```jsx
+<div className="numbered-list">
+  <div className="numbered-item">
+    <div className="number-circle">
+      <span className="number">1</span>
+    </div>
+    <p className="text-primary">
+      <strong>First step:</strong> Step description...
+    </p>
+  </div>
+
+  <div className="numbered-item">
+    <div className="number-circle">
+      <span className="number">2</span>
+    </div>
+    <p className="text-primary">
+      <strong>Second step:</strong> Step description...
+    </p>
+  </div>
+</div>
+```
+
+### Links
+
+```jsx
+<a href="/path" className="link-standard">
+  Link text
+</a>
+```
+
 ## UI Components
 
 ### Buttons
@@ -283,6 +435,125 @@ Key dark mode treatments:
 
 - Mode transitions: `transition: background-color 0.3s ease, color 0.3s ease`
 - Hover transitions: `transition-all duration-300`, `transition-colors duration-200`
+
+## Example Page Structure
+
+Here's a complete example of a lesson page using the standardized component classes:
+
+```jsx
+import React from "react";
+import { Book, Info, AlertTriangle } from "lucide-react";
+
+const ExampleLessonPage = () => {
+  return (
+    <div className="page-container">
+      <div className="page-content">
+        {/* Page Header */}
+        <header className="page-header">
+          <h1 className="page-title">Lesson Title</h1>
+          <p className="page-subtitle">
+            Brief description of what this lesson covers
+          </p>
+        </header>
+
+        {/* Introduction Section */}
+        <div className="mb-12">
+          <h2 className="section-header">
+            <Book className="mr-2 text-blue-600" />
+            Introduction
+          </h2>
+          <p className="text-primary">Introductory text about this lesson...</p>
+        </div>
+
+        {/* Main Content Section */}
+        <section className="content-section">
+          <h2 className="section-title">Main Topic</h2>
+          <p className="text-primary mb-4">
+            Content explaining the main topic...
+          </p>
+
+          {/* Example Card */}
+          <div className="content-card mb-6">
+            <h3 className="card-title">Example</h3>
+            <p className="text-small">Example details...</p>
+          </div>
+
+          {/* Two-column Card Grid */}
+          <h3 className="font-semibold text-slate-800 mb-4">Key Points</h3>
+          <div className="card-grid">
+            <div className="content-card">
+              <h4 className="card-title">First Point</h4>
+              <p className="text-small">Details about first point...</p>
+            </div>
+            <div className="content-card">
+              <h4 className="card-title">Second Point</h4>
+              <p className="text-small">Details about second point...</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Important Note */}
+        <div className="note-callout">
+          <p className="text-primary">
+            <strong>Note:</strong> Important information to remember...
+          </p>
+        </div>
+
+        {/* Steps Section */}
+        <section className="content-section">
+          <h2 className="section-title">Step-by-Step Guide</h2>
+          <p className="text-primary mb-4">
+            Follow these steps to accomplish the task:
+          </p>
+
+          <div className="numbered-list">
+            <div className="numbered-item">
+              <div className="number-circle">
+                <span className="number">1</span>
+              </div>
+              <p className="text-primary">
+                <strong>First step:</strong> Details about the first step...
+              </p>
+            </div>
+            <div className="numbered-item">
+              <div className="number-circle">
+                <span className="number">2</span>
+              </div>
+              <p className="text-primary">
+                <strong>Second step:</strong> Details about the second step...
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Warning Section */}
+        <div className="warning-callout">
+          <AlertTriangle className="text-yellow-500 mr-3 mt-1 flex-shrink-0" />
+          <div>
+            <h3 className="font-bold text-slate-800 mb-1">Important Warning</h3>
+            <p className="text-small">
+              Critical information about potential issues...
+            </p>
+          </div>
+        </div>
+
+        {/* Page Footer */}
+        <footer className="page-footer">
+          <p>
+            Additional resources and further reading can be found in the{" "}
+            <a href="/resources" className="link-standard">
+              Resources section
+            </a>
+            .
+          </p>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default ExampleLessonPage;
+```
 
 ---
 

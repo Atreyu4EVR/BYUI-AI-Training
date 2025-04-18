@@ -19,7 +19,6 @@ const Capabilities = () => {
       icon: <FileText size={36} className="text-blue-600" />,
       description:
         "Systems that understand, generate, and manipulate natural language text.",
-      color: "bg-blue-50 border-blue-500", // Adjusted colors
       examples: [
         "University support chatbot for admissions and registration questions",
         "AI-powered writing assistance for student papers and assignments",
@@ -49,7 +48,6 @@ const Capabilities = () => {
       icon: <Eye size={36} className="text-green-600" />,
       description:
         "Systems that analyze, understand, and generate visual information.",
-      color: "bg-green-50 border-green-500", // Adjusted colors
       examples: [
         "Campus space occupancy monitoring systems",
         "Visual content generation for university publications",
@@ -79,7 +77,6 @@ const Capabilities = () => {
       icon: <Ear size={36} className="text-purple-600" />,
       description:
         "Systems that process, understand, generate, or transform audio data.",
-      color: "bg-purple-50 border-purple-500", // Adjusted colors
       examples: [
         "Voice-interactive campus information kiosks",
         "Lecture transcription and captioning systems",
@@ -109,7 +106,6 @@ const Capabilities = () => {
       icon: <MessageSquare size={36} className="text-orange-600" />,
       description:
         "Systems that integrate and process information across multiple types of data (text, images, audio, etc.).",
-      color: "bg-orange-50 border-orange-500", // Adjusted colors
       examples: [
         "Interactive campus tour guides combining visual and voice interfaces",
         "Comprehensive student support systems that can understand documents and images",
@@ -195,10 +191,9 @@ const Capabilities = () => {
         </header>
 
         {/* Intro Box */}
-        <div className="mb-8 bg-cyan-50 p-5 rounded-lg border-l-4 border-cyan-500">
+        <div className="mb-8">
           <h2 className="text-xl font-semibold text-slate-800 mb-2 flex items-center">
-            <Lightbulb className="mr-2 text-cyan-500" />{" "}
-            {/* Adjusted Icon Color */}
+            <Lightbulb className="mr-2 text-cyan-500" />
             What Makes AI Systems Different?
           </h2>
           <p className="text-slate-700">
@@ -218,10 +213,7 @@ const Capabilities = () => {
 
           <div className="grid grid-cols-1 gap-8">
             {aiTypes.map((type, index) => (
-              <div
-                key={index}
-                className={`p-6 rounded-lg shadow-sm border-l-4 ${type.color}`}
-              >
+              <div key={index} className="p-6 rounded-lg shadow-sm">
                 <div className="flex items-center mb-4">
                   <div className="mr-4 flex-shrink-0">{type.icon}</div>
                   <h3 className="text-xl font-bold text-slate-800">
@@ -290,13 +282,9 @@ const Capabilities = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {aiTasks[0].tasks.map((task, index) => (
-              <div
-                key={index}
-                className="p-5 rounded-lg shadow-sm border-l-4 border-slate-400 bg-slate-50"
-              >
+              <div key={index} className="p-5 rounded-lg shadow-sm">
                 <h3 className="text-lg font-bold text-slate-800 mb-2 flex items-center">
-                  <Search className="mr-2 text-slate-500" size={20} />{" "}
-                  {/* Adjusted Icon Color */}
+                  <Search className="mr-2 text-slate-500" size={20} />
                   {task.name}
                 </h3>
                 <p className="text-slate-700 mb-2 text-sm">
@@ -316,7 +304,7 @@ const Capabilities = () => {
           </h2>
 
           <div className="grid grid-cols-1 gap-4">
-            <div className="flex items-start p-4 rounded-lg bg-green-50">
+            <div className="flex items-start p-4 rounded-lg">
               <div className="mr-3 mt-1 flex-shrink-0">
                 <Check className="text-green-600" />
               </div>
@@ -332,7 +320,7 @@ const Capabilities = () => {
               </div>
             </div>
 
-            <div className="flex items-start p-4 rounded-lg bg-green-50">
+            <div className="flex items-start p-4 rounded-lg">
               <div className="mr-3 mt-1 flex-shrink-0">
                 <Check className="text-green-600" />
               </div>
@@ -348,7 +336,7 @@ const Capabilities = () => {
               </div>
             </div>
 
-            <div className="flex items-start p-4 rounded-lg bg-green-50">
+            <div className="flex items-start p-4 rounded-lg">
               <div className="mr-3 mt-1 flex-shrink-0">
                 <Check className="text-green-600" />
               </div>
@@ -364,7 +352,7 @@ const Capabilities = () => {
               </div>
             </div>
 
-            <div className="flex items-start p-4 rounded-lg bg-green-50">
+            <div className="flex items-start p-4 rounded-lg">
               <div className="mr-3 mt-1 flex-shrink-0">
                 <Check className="text-green-600" />
               </div>
@@ -383,7 +371,7 @@ const Capabilities = () => {
           </div>
         </section>
 
-        {/* Important Considerations Box */}
+        {/* Important Considerations Box - keeping this as a light callout */}
         <div className="bg-yellow-50 p-5 rounded-lg border-l-4 border-yellow-500 mb-8">
           <div className="flex items-start">
             <AlertTriangle className="text-yellow-500 mr-3 mt-1 flex-shrink-0" />

@@ -26,7 +26,7 @@ const GettingStarted = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="bg-white p-5 rounded-lg shadow-md border-t-4 border-cyan-400">
+            <div className="p-5 rounded-lg shadow-sm border-t-4 border-cyan-400">
               <h3 className="font-bold text-slate-800 mb-2">History of AI</h3>
               <p className="text-slate-700">
                 Discover the key milestones in AI development from theoretical
@@ -35,7 +35,7 @@ const GettingStarted = () => {
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-lg shadow-md border-t-4 border-green-400">
+            <div className="p-5 rounded-lg shadow-sm border-t-4 border-green-400">
               <h3 className="font-bold text-slate-800 mb-2">AI Capabilities</h3>
               <p className="text-slate-700">
                 Explore what different types of AI systems can (and cannot) do,
@@ -43,7 +43,7 @@ const GettingStarted = () => {
               </p>
             </div>
 
-            <div className="bg-white p-5 rounded-lg shadow-md border-t-4 border-purple-400">
+            <div className="p-5 rounded-lg shadow-sm border-t-4 border-purple-400">
               <h3 className="font-bold text-slate-800 mb-2">How AI Works</h3>
               <p className="text-slate-700">
                 Learn the fundamental concepts behind AI systems like
@@ -61,7 +61,7 @@ const GettingStarted = () => {
             How to Navigate this Training
           </h2>
 
-          <div className="bg-white p-5 rounded-lg shadow-md">
+          <div className="p-5 rounded-lg shadow-sm border border-slate-200">
             <p className="text-slate-700 mb-4">
               This training is designed to be interactive and self-paced. Here's
               how to get the most out of it:
@@ -129,7 +129,7 @@ const GettingStarted = () => {
             Prerequisites
           </h2>
 
-          <div className="bg-white p-5 rounded-lg shadow-md">
+          <div className="p-5 rounded-lg shadow-sm border border-slate-200">
             <p className="text-slate-700 mb-4">
               To participate fully in this training, please ensure you have:
             </p>
@@ -143,7 +143,7 @@ const GettingStarted = () => {
               <li>A basic familiarity with your computer and web browsing</li>
             </ul>
 
-            <div className="mt-4 bg-amber-50 p-4 rounded-lg">
+            <div className="mt-4 p-4 rounded-lg border border-amber-300">
               <p className="text-slate-700">
                 <strong>Note:</strong> No technical background is required for
                 this training. We've designed it to be accessible for all

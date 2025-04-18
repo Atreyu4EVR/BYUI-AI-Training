@@ -199,7 +199,7 @@ const History = () => {
         </header>
 
         {/* Intro box styling */}
-        <div className="mb-8 bg-cyan-50 p-4 rounded-lg border-l-4 border-cyan-500">
+        <div className="mb-8">
           <h2 className="text-xl font-semibold text-slate-800 mb-2">
             What is Artificial Intelligence?
           </h2>
@@ -277,7 +277,7 @@ const History = () => {
         </div>
 
         {/* Future outlook box */}
-        <div className="mt-10 bg-slate-50 p-5 rounded-lg border-t-2 border-slate-200">
+        <div className="mt-10 p-5 rounded-lg border border-slate-200">
           <h2 className="text-xl font-bold text-slate-800 mb-3">
             The Future of AI
           </h2>

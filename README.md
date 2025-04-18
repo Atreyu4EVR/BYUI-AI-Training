@@ -9,14 +9,80 @@ This repository contains the BYU-Idaho Artificial Intelligence Training applicat
 - Responsive design for all devices
 - Dark/light mode support
 - Glossary of AI terms
+- Single-page application (SPA) architecture
 
 ## Technologies
 
-- React
+### Core
+
+- React 18
 - TypeScript
 - Tailwind CSS
 - Vite
-- Fuse.js for search
+- React Router (v7)
+
+### UI Components & Icons
+
+- Headless UI (`@headlessui/react`)
+- Heroicons (`@heroicons/react`)
+- Lucide React
+
+### State Management
+
+- React Context API (for theme and search functionality)
+
+### Search
+
+- Fuse.js for fuzzy searching
+
+### Build & Deployment
+
+- Docker & Nginx
+- Azure App Service
+- Azure Container Registry
+
+## Project Structure
+
+```
+src/
+├── assets/        # Static assets and images
+├── components/    # React components
+├── context/       # Context providers (Theme, Search)
+├── routes.tsx     # Centralized routing configuration
+├── index.css      # Global styles and Tailwind imports
+└── main.tsx       # Application entry point
+```
+
+### Key Components
+
+- `Layout.tsx` - Main application layout
+- `Navbar.tsx` - Navigation component
+- `SearchBar.tsx` - Search functionality
+- `ThemeToggle.tsx` - Light/dark theme switcher
+
+### Context Providers
+
+- `ThemeContext.tsx` - Manages light/dark theme preferences
+- `SearchContext.tsx` - Manages search functionality
+
+### Routing Architecture
+
+The application uses React Router v7 for client-side routing in a single-page application (SPA) architecture:
+
+- All routes are defined in `src/routes.tsx`
+- `BrowserRouter` provides clean URLs without hash fragments
+- Nginx is configured to redirect all requests to `index.html`
+- A 404 page redirects to the main application with the requested path
+
+#### SPA Routing Configuration
+
+The application includes multiple layers of SPA routing support:
+
+1. **Development**: Custom middleware in `spa-history-fallback.ts` handles client-side routing
+2. **Production (Nginx)**: Configuration in `nginx.conf` redirects all routes to index.html
+3. **Static Hosting**: Configuration files in the `public` directory for various platforms:
+   - `_redirects` file for Netlify
+   - `_headers` file with security headers
 
 ## Development
 
@@ -24,6 +90,10 @@ This repository contains the BYU-Idaho Artificial Intelligence Training applicat
 
 - Node.js (v16+)
 - npm or yarn
+
+### Environment Variables
+
+No environment variables are required for local development. For production deployment, see the Docker and Azure configuration sections.
 
 ### Setup
 
@@ -39,13 +109,33 @@ npm install
 npm run dev
 ```
 
-### Build
+### Available Scripts
+
+```bash
+# Start development server
+npm run dev
+
+# Type-check and build for production
+npm run build
+
+# Lint TypeScript/TSX files
+npm run lint
+
+# Preview production build locally
+npm run preview
+```
+
+### Browser Compatibility
+
+The application supports all modern browsers (Chrome, Firefox, Safari, Edge). Internet Explorer is not supported.
+
+## Build
 
 ```bash
 # Build for production
 npm run build
 
-# Preview production build
+# Preview production build locally
 npm run preview
 ```
 
@@ -56,14 +146,22 @@ This application can be containerized for easy deployment using Docker.
 ### Building the Docker Image
 
 ```bash
-# Build the image
-docker build -t byui-ai-training:latest .
+# Build the image (specifying platform for compatibility with Azure)
+docker build -t byui-ai-training:latest --platform linux/amd64 .
 
 # Run locally
 docker run -p 8080:80 byui-ai-training:latest
 ```
 
 Visit `http://localhost:8080` to see the application running.
+
+### Deployment Architecture
+
+The application is built as a static site and served through Nginx within a Docker container:
+
+1. Build stage compiles the React/TypeScript application
+2. Production stage uses Nginx to serve the static assets with SPA routing support
+3. Container is deployed to Azure App Service
 
 ## Azure Deployment
 
@@ -95,6 +193,23 @@ az acr build --registry byuiaitraining --image byui-ai-training:latest .
 # Create a web app using the container image
 az webapp create --resource-group byui-ai-training-rg --plan byui-ai-training-plan --name byui-ai-training --deployment-container-image-name byuiaitraining.azurecr.io/byui-ai-training:latest
 ```
+
+## Contributing
+
+### Guidelines
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+### Code Style
+
+- Follow the existing code style
+- Use TypeScript for all new components
+- Add JSDoc comments for functions and components
+- Ensure components are responsive
 
 ## License
 

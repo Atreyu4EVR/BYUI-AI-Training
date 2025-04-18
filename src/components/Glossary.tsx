@@ -30,78 +30,160 @@ const Glossary = () => {
   );
   const [searchResults, setSearchResults] = useState<FuseResult[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Initialize glossary terms
   useEffect(() => {
-    // Fetch the glossary markdown file
-    fetch("/GLOSSARY.md")
-      .then((response) => response.text())
-      .then((text) => {
-        // Parse the markdown file
-        const terms: GlossaryTerm[] = [];
-        const lines = text.split("\n");
+    // Define possible paths to try - adding more options to handle different server configurations
+    const possiblePaths = [
+      "/GLOSSARY.md",
+      "./GLOSSARY.md",
+      "GLOSSARY.md",
+      "../GLOSSARY.md",
+      window.location.origin + "/GLOSSARY.md",
+      // Add more fallbacks if needed
+    ];
 
-        let currentTerm = "";
-        let currentDefinition = "";
-
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i].trim();
-
-          // Check if this is a term heading (starts with ###)
-          if (line.startsWith("### ")) {
-            // If we already have a term and definition, save it
-            if (currentTerm && currentDefinition) {
-              terms.push({
-                term: currentTerm,
-                definition: currentDefinition.trim(),
-              });
-            }
-
-            // Start a new term
-            currentTerm = line.substring(4).trim();
-            currentDefinition = "";
-          }
-          // Skip the title line that starts with #
-          else if (line.startsWith("# ")) {
-            continue;
-          }
-          // Otherwise, add to the current definition if we have a term
-          else if (currentTerm && line) {
-            currentDefinition += line + " ";
-          }
+    // Function to try loading from a path
+    const tryLoadFromPath = async (path: string) => {
+      console.log(`Trying to load glossary from: ${path}`);
+      try {
+        const response = await fetch(path);
+        if (!response.ok) {
+          throw new Error(
+            `Failed to load from ${path} with status ${response.status}`
+          );
         }
+        return await response.text();
+      } catch (error) {
+        console.warn(`Failed to load from ${path}:`, error);
+        return null;
+      }
+    };
 
-        // Don't forget to add the last term
-        if (currentTerm && currentDefinition) {
-          terms.push({
-            term: currentTerm,
-            definition: currentDefinition.trim(),
-          });
+    // Try loading from each path until one works
+    const loadGlossary = async () => {
+      for (const path of possiblePaths) {
+        const text = await tryLoadFromPath(path);
+        if (text) {
+          parseGlossaryText(text);
+          return;
         }
+      }
 
-        // Sort terms alphabetically
-        terms.sort((a, b) => a.term.localeCompare(b.term));
+      // If we got here, all paths failed
+      console.error("All paths failed to load glossary.");
+      setLoadError("Failed to load glossary terms. Please try again later.");
+      setIsLoading(false);
 
-        setGlossaryTerms(terms);
-        setIsLoading(false);
+      // As a fallback, set some example terms to show something
+      const fallbackTerms = [
+        {
+          term: "Artificial Intelligence (AI)",
+          definition:
+            "Technology that enables machines to mimic human thinking, like recognizing patterns or understanding language.",
+        },
+        {
+          term: "Machine Learning (ML)",
+          definition:
+            "A type of AI that allows computers to learn from data without being explicitly programmed.",
+        },
+        {
+          term: "Large Language Model (LLM)",
+          definition:
+            "A type of AI system trained on vast amounts of text data to understand and generate human-like language.",
+        },
+        {
+          term: "ChatGPT",
+          definition:
+            "An AI chatbot developed by OpenAI that can engage in conversational dialogue with users.",
+        },
+        {
+          term: "Prompt Engineering",
+          definition:
+            "The process of crafting effective input prompts to generate desired outputs from AI systems.",
+        },
+      ];
 
-        // Initialize Fuse.js with our terms
-        const options = {
-          includeMatches: true,
-          threshold: 0.3, // Lower values = more strict matching (0 = exact match only)
-          keys: [
-            { name: "term", weight: 2 }, // Term is more important than definition
-            { name: "definition", weight: 1 },
-          ],
-        };
+      setGlossaryTerms(fallbackTerms);
+      const options = {
+        includeMatches: true,
+        threshold: 0.3,
+        keys: [
+          { name: "term", weight: 2 },
+          { name: "definition", weight: 1 },
+        ],
+      };
+      setFuseInstance(new Fuse(fallbackTerms, options));
+    };
 
-        const fuse = new Fuse(terms, options);
-        setFuseInstance(fuse);
-      })
-      .catch((error) => {
-        console.error("Error loading glossary:", error);
-        setIsLoading(false);
-      });
+    // Function to parse the glossary markdown text
+    const parseGlossaryText = (text: string) => {
+      // Parse the markdown file
+      const terms: GlossaryTerm[] = [];
+      const lines = text.split("\n");
+
+      let currentTerm = "";
+      let currentDefinition = "";
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
+        // Check if this is a term heading (starts with ###)
+        if (line.startsWith("### ")) {
+          // If we already have a term and definition, save it
+          if (currentTerm && currentDefinition) {
+            terms.push({
+              term: currentTerm,
+              definition: currentDefinition.trim(),
+            });
+          }
+
+          // Start a new term
+          currentTerm = line.substring(4).trim();
+          currentDefinition = "";
+        }
+        // Skip the title line that starts with #
+        else if (line.startsWith("# ")) {
+          continue;
+        }
+        // Otherwise, add to the current definition if we have a term
+        else if (currentTerm && line) {
+          currentDefinition += line + " ";
+        }
+      }
+
+      // Don't forget to add the last term
+      if (currentTerm && currentDefinition) {
+        terms.push({
+          term: currentTerm,
+          definition: currentDefinition.trim(),
+        });
+      }
+
+      console.log(`Successfully parsed ${terms.length} glossary terms`);
+
+      // Sort terms alphabetically
+      terms.sort((a, b) => a.term.localeCompare(b.term));
+
+      setGlossaryTerms(terms);
+      setIsLoading(false);
+
+      // Initialize Fuse.js with our terms
+      const options = {
+        includeMatches: true,
+        threshold: 0.3,
+        keys: [
+          { name: "term", weight: 2 },
+          { name: "definition", weight: 1 },
+        ],
+      };
+
+      const fuse = new Fuse(terms, options);
+      setFuseInstance(fuse);
+    };
+
+    loadGlossary();
   }, []);
 
   // Perform search when searchTerm changes
@@ -218,7 +300,7 @@ const Glossary = () => {
       </div>
 
       {/* Alphabet Navigation - only show when not searching */}
-      {!searchTerm && (
+      {!searchTerm && glossaryTerms.length > 0 && (
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           {alphabet.map((letter) => (
             <button
@@ -235,6 +317,8 @@ const Glossary = () => {
       {/* Glossary Content */}
       {isLoading ? (
         <div className="text-center py-8">Loading glossary terms...</div>
+      ) : loadError ? (
+        <div className="text-center py-8 text-red-500">{loadError}</div>
       ) : searchTerm && searchResults.length === 0 ? (
         <div className="text-center py-8">
           No terms found matching "{searchTerm}". Try a different search term or
@@ -277,30 +361,38 @@ const Glossary = () => {
       ) : (
         // Alphabetical view
         <div>
-          {letterSections.map((section) => (
-            <div
-              key={section?.letter}
-              id={`letter-${section?.letter}`}
-              className="mb-8"
-            >
-              <h2 className="text-2xl font-bold mb-4 sticky top-0 bg-white dark:bg-slate-900 py-2 z-10 border-b">
-                {section?.letter}
-              </h2>
-              <div className="space-y-6">
-                {section?.terms.map((term, index) => (
-                  <div
-                    key={index}
-                    className="p-4 border rounded-lg shadow-sm dark:bg-slate-800 dark:border-slate-700"
-                  >
-                    <h3 className="text-xl font-semibold mb-2">{term.term}</h3>
-                    <p className="text-slate-700 dark:text-slate-300">
-                      {term.definition}
-                    </p>
-                  </div>
-                ))}
+          {letterSections.length > 0 ? (
+            letterSections.map((section) => (
+              <div
+                key={section?.letter}
+                id={`letter-${section?.letter}`}
+                className="mb-8"
+              >
+                <h2 className="text-2xl font-bold mb-4 sticky top-0 bg-white dark:bg-slate-900 py-2 z-10 border-b">
+                  {section?.letter}
+                </h2>
+                <div className="space-y-6">
+                  {section?.terms.map((term, index) => (
+                    <div
+                      key={index}
+                      className="p-4 border rounded-lg shadow-sm dark:bg-slate-800 dark:border-slate-700"
+                    >
+                      <h3 className="text-xl font-semibold mb-2">
+                        {term.term}
+                      </h3>
+                      <p className="text-slate-700 dark:text-slate-300">
+                        {term.definition}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="text-center py-8">
+              No glossary terms available. This could be a temporary issue.
             </div>
-          ))}
+          )}
         </div>
       )}
     </div>

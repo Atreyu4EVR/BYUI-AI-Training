@@ -1,73 +1,105 @@
-# BYU-Idaho AI Training for Administrators
+# BYU-Idaho AI Training Application
 
-This project is an interactive training site designed to equip BYU-Idaho administrators and staff with practical AI knowledge and skills to enhance their effectiveness and productivity while upholding the university's values and standards.
+This repository contains the BYU-Idaho Artificial Intelligence Training application, designed to help administrators learn about AI technologies and how to apply them in their work.
 
-## Project Overview
+## Features
 
-The training site covers:
+- Comprehensive AI learning content
+- Interactive search functionality
+- Responsive design for all devices
+- Dark/light mode support
+- Glossary of AI terms
 
-- **AI Fundamentals**: History, capabilities, and how generative AI works
-- **Practical Applications**: Real-world administrative tasks ideal for AI assistance
-- **Effective Use Skills**: Crafting effective prompts with context levels (minimal, moderate, comprehensive)
-- **BYU-Idaho AI Guidelines**: Official guidance on approved tools and data usage
+## Technologies
 
-Built with React, TypeScript, Vite, and Tailwind CSS, with full support for both light and dark modes.
+- React
+- TypeScript
+- Tailwind CSS
+- Vite
+- Fuse.js for search
 
-## Setup Instructions
+## Development
 
-1. **Clone the repository:**
+### Prerequisites
 
-   ```bash
-   git clone [repository-url]
-   cd Training-BYUI-Administrators
-   ```
+- Node.js (v16+)
+- npm or yarn
 
-2. **Install dependencies:**
+### Setup
 
-   ```bash
-   npm install
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/Training-BYUI-Administrators.git
+cd Training-BYUI-Administrators
 
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal) to view it in the browser.
+# Install dependencies
+npm install
 
-## Available Scripts
+# Run development server
+npm run dev
+```
 
-### `npm run dev`
+### Build
 
-Runs the app in development mode with hot-reloading enabled.
+```bash
+# Build for production
+npm run build
 
-### `npm run build`
+# Preview production build
+npm run preview
+```
 
-Builds the app for production to the `dist` folder, optimized for performance.
+## Docker Deployment
 
-### `npm run preview`
+This application can be containerized for easy deployment using Docker.
 
-Serves the production build locally for testing before deployment.
+### Building the Docker Image
 
-## Project Structure
+```bash
+# Build the image
+docker build -t byui-ai-training:latest .
 
-- **Lesson One**: Covers AI fundamentals, history, capabilities, and how generative AI works
-- **Prompt Exercises**: Interactive examples of minimal, moderate, and comprehensive prompting techniques
-- **Prerequisites**: Setup guide for necessary accounts (ChatGPT)
-- **About**: Information about the training initiative and BYU-Idaho AI guidelines
+# Run locally
+docker run -p 8080:80 byui-ai-training:latest
+```
 
-## Deployment
+Visit `http://localhost:8080` to see the application running.
 
-The site is configured to be deployed as a GitHub Pages site with proper routing.
+## Azure Deployment
 
-1. **Build the project:**
+This repository includes configuration for deploying to Azure using:
 
-   ```bash
-   npm run build
-   ```
+1. Azure DevOps Pipelines (`azure-pipelines.yml`)
+2. GitHub Actions (`.github/workflows/azure-deploy.yml`)
 
-2. **Deploy using GitHub Actions:**
-   The repository includes a GitHub Actions workflow that automatically builds and deploys the site when changes are pushed to the main branch.
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
-## Additional Resources
+### Quick Azure CLI Deployment
 
-For more information about BYU-Idaho's AI guidelines, please visit the [official BYU-Idaho GenAI website](https://www.byui.edu/genai/).
+```bash
+# Login to Azure
+az login
+
+# Create a resource group
+az group create --name byui-ai-training-rg --location westus2
+
+# Create an App Service plan
+az appservice plan create --name byui-ai-training-plan --resource-group byui-ai-training-rg --is-linux --sku B1
+
+# Create a container registry
+az acr create --resource-group byui-ai-training-rg --name byuiaitraining --sku Basic
+
+# Build and push to ACR
+az acr build --registry byuiaitraining --image byui-ai-training:latest .
+
+# Create a web app using the container image
+az webapp create --resource-group byui-ai-training-rg --plan byui-ai-training-plan --name byui-ai-training --deployment-container-image-name byuiaitraining.azurecr.io/byui-ai-training:latest
+```
+
+## License
+
+[MIT License](LICENSE)
+
+## Contact
+
+For questions about this project, please contact the BYU-Idaho IT department.

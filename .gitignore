@@ -136,6 +136,12 @@ _site
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Cursor Rules
+.cursor/*
+.cursor/
+
+.github/workflows/*
+
 # yarn v2
 .yarn/cache
 .yarn/unplugged

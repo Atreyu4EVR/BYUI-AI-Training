@@ -8,18 +8,18 @@ const Home = () => {
       <div className="bg-gradient-to-br from-white to-blue-50 dark:from-byui-dark-background dark:to-byui-dark-navbar pt-12 pb-32 px-4">
         <div className="container mx-auto max-w-4xl">
           {/* Hero Content */}
-          <div className="text-center space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-byui-light-text-primary dark:text-byui-dark-text-primary">
-              AI Training for <br className="hidden sm:block" />
-              BYU-Idaho Administrators
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-byui-light-text-primary dark:text-byui-dark-text-primary text-center">
+              Introduction to <br className="hidden sm:block" />
+              Artificial Intelligence
             </h1>
-            <p className="text-lg text-byui-light-text-secondary dark:text-byui-dark-text-secondary max-w-2xl mx-auto">
-              In today's rapidly evolving technological landscape, artificial
-              intelligence tools are transforming how universities operate. This
-              training introduces foundational AI concepts and provides hands-on
-              experience with approved tools such as ChatGPT, CoPilot, and
-              Gemini.
-            </p>
+            <div className="space-y-4 text-left">
+              <p className="text-lg text-byui-light-text-secondary dark:text-byui-dark-text-secondary">
+                This hands-on training introduces BYU-Idaho employees to
+                foundational AI concepts and provides hands-on experience with
+                approved tools such as ChatGPT, CoPilot, and Gemini.
+              </p>
+            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">

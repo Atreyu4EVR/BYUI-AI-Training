@@ -6,6 +6,8 @@ import Prerequisites from "./components/Prerequisites";
 import History from "./components/History";
 import Capabilities from "./components/Capabilities";
 import HowItWorks from "./components/HowItWorks";
+import Prompting from "./components/Prompting";
+import LessonTwo from "./components/LessonTwo";
 import AboutPage from "./components/About";
 import Minimal from "./components/Minimal";
 import Moderate from "./components/Moderate";
@@ -15,8 +17,31 @@ import ToolComparison from "./components/ToolComparison";
 import ProductRankings from "./components/ProductRankings";
 import Glossary from "./components/Glossary";
 
+// Placeholder component for pages not yet created
+interface PlaceholderPageProps {
+  title: string;
+}
+
+const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ title }) => (
+  <div className="page-container">
+    <div className="page-content">
+      <header className="page-header">
+        <h1 className="page-title">{title}</h1>
+        <p className="page-subtitle">
+          This page is under development and will be coming soon.
+        </p>
+      </header>
+      <div className="content-section">
+        <p className="text-primary">
+          We're working on building this content. Please check back later!
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
 // Component to handle 404 errors
-const NotFound = () => (
+const NotFound: React.FC = () => (
   <div className="container mx-auto mt-10 text-center">
     <h1 className="text-3xl font-bold mb-4">Page Not Found</h1>
     <p className="mb-4">Sorry, the page you are looking for doesn't exist.</p>
@@ -31,17 +56,55 @@ const AppRoutes = () => (
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="prerequisites" element={<Prerequisites />} />
+
+      {/* Lesson One Routes */}
+      <Route path="getting-started" element={<GettingStarted />} />
       <Route path="history" element={<History />} />
       <Route path="capabilities" element={<Capabilities />} />
       <Route path="how-it-works" element={<HowItWorks />} />
-      <Route path="getting-started" element={<GettingStarted />} />
+      <Route path="prompting" element={<Prompting />} />
+      <Route path="minimal" element={<Minimal />} />
+
+      {/* Lesson Two Routes */}
+      <Route path="lesson-two" element={<LessonTwo />} />
+      <Route
+        path="context-is-everything"
+        element={<PlaceholderPage title="Context is Everything" />}
+      />
+      <Route
+        path="prompt-basics"
+        element={<PlaceholderPage title="Prompt Basics" />}
+      />
+      <Route
+        path="advanced-prompting"
+        element={<PlaceholderPage title="Advanced Prompting" />}
+      />
+      <Route path="moderate" element={<Moderate />} />
+
+      {/* Lesson Three Routes */}
+      <Route
+        path="lesson-three"
+        element={<PlaceholderPage title="Lesson Three: Overview" />}
+      />
+      <Route
+        path="lesson-three-topic-1"
+        element={<PlaceholderPage title="Placeholder 1" />}
+      />
+      <Route
+        path="lesson-three-topic-2"
+        element={<PlaceholderPage title="Placeholder 2" />}
+      />
+      <Route
+        path="lesson-three-topic-3"
+        element={<PlaceholderPage title="Placeholder 3" />}
+      />
+      <Route path="comprehensive" element={<Comprehensive />} />
+
+      {/* Resource Routes */}
       <Route path="tool-comparison" element={<ToolComparison />} />
       <Route path="product-rankings" element={<ProductRankings />} />
       <Route path="glossary" element={<Glossary />} />
       <Route path="about" element={<AboutPage />} />
-      <Route path="minimal" element={<Minimal />} />
-      <Route path="moderate" element={<Moderate />} />
-      <Route path="comprehensive" element={<Comprehensive />} />
 
       {/* Legacy URL support */}
       <Route path="index.html" element={<Navigate to="/" replace />} />
@@ -57,6 +120,14 @@ const AppRoutes = () => (
       <Route
         path="how-it-works.html"
         element={<Navigate to="/how-it-works" replace />}
+      />
+      <Route
+        path="prompting.html"
+        element={<Navigate to="/prompting" replace />}
+      />
+      <Route
+        path="lesson-two.html"
+        element={<Navigate to="/lesson-two" replace />}
       />
       <Route
         path="getting-started.html"

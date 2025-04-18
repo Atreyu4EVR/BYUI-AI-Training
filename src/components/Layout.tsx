@@ -18,13 +18,26 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   // Determine if the current route is a lesson page
   const isLessonPage = [
+    // Lesson One
     "/getting-started",
     "/history",
     "/capabilities",
     "/how-it-works",
-    "/tool-comparison",
+    "/prompting",
     "/minimal",
+
+    // Lesson Two
+    "/lesson-two",
+    "/context-is-everything",
+    "/prompt-basics",
+    "/advanced-prompting",
     "/moderate",
+
+    // Lesson Three
+    "/lesson-three",
+    "/lesson-three-topic-1",
+    "/lesson-three-topic-2",
+    "/lesson-three-topic-3",
     "/comprehensive",
   ].includes(location.pathname);
 

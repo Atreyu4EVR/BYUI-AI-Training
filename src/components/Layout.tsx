@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import LessonNavigation from "./LessonNavigation";
+import BackToTop from "./BackToTop";
 import { useTheme } from "../context/ThemeContext";
 import { useLocation } from "react-router-dom";
 
@@ -39,6 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {isLessonPage && <LessonNavigation currentPath={location.pathname} />}
       <main className="flex-grow">{children || <Outlet />}</main>
       <Footer />
+      <BackToTop />
     </div>
   );
 };

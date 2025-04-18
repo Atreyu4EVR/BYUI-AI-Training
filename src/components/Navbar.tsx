@@ -70,6 +70,7 @@ const Navbar = () => {
   const isAnyResourceActive = isPathActive([
     "tool-comparison",
     "product-rankings",
+    "glossary",
   ]);
 
   const toggleSubmenu = (menu: string) => {
@@ -303,6 +304,14 @@ const Navbar = () => {
                   transition
                   className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                 >
+                  <MenuItem>
+                    <Link
+                      to="/glossary"
+                      className={getMenuItemClass("glossary")}
+                    >
+                      AI Glossary
+                    </Link>
+                  </MenuItem>
                   <MenuItem>
                     <Link
                       to="/tool-comparison"

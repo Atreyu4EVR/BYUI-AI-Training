@@ -9,7 +9,17 @@ This document provides step-by-step instructions for building and deploying the 
 3. [Docker](https://www.docker.com/get-started) installed
 4. Git repository with your application code
 
-## Method 1: Manual Deployment
+## Important Architecture Considerations
+
+When deploying from a Mac (especially with Apple Silicon M1/M2/M3 chips) to Azure, you must build for the correct architecture:
+
+1. Always specify `--platform=linux/amd64` in your Dockerfile
+2. Always use the `--platform linux/amd64` flag when building with Docker
+3. This prevents "exec format error" issues in Azure App Service
+
+## Current Deployment Process (Manual)
+
+The following steps describe our current deployment process:
 
 ### Step 1: Build Docker Image Locally
 
@@ -17,8 +27,8 @@ This document provides step-by-step instructions for building and deploying the 
 # Navigate to your project directory
 cd Training-BYUI-Administrators
 
-# Build the Docker image
-docker build -t byui-ai-training:latest .
+# Build the Docker image (specifying platform for compatibility with Azure)
+docker build -t byui-ai-training:latest --platform linux/amd64 .
 
 # Test the image locally
 docker run -p 8080:80 byui-ai-training:latest
@@ -26,104 +36,112 @@ docker run -p 8080:80 byui-ai-training:latest
 
 Visit `http://localhost:8080` in your browser to verify the application works correctly.
 
-### Step 2: Create Azure Container Registry (ACR)
+### Step 2: Push to Azure Container Registry (ACR)
 
 ```bash
 # Log in to Azure
 az login
 
-# Create a resource group if you don't have one
-az group create --name byui-ai-training-rg --location westus2
+# Log in to the container registry
+az acr login --name byuiaitraining
+
+# Tag the image for your registry
+docker tag byui-ai-training:latest byuiaitraining.azurecr.io/byui-ai-training:latest
+
+# For version control, also tag with a specific version number
+docker tag byui-ai-training:latest byuiaitraining.azurecr.io/byui-ai-training:v1
+
+# Push the images to ACR
+docker push byuiaitraining.azurecr.io/byui-ai-training:latest
+docker push byuiaitraining.azurecr.io/byui-ai-training:v1
+```
+
+### Step 3: Update the Web App
+
+```bash
+# Update the web app to use the newly pushed image
+az webapp config container set --name byui-ai-training --resource-group byui-ai-training-rg \
+  --docker-custom-image-name byuiaitraining.azurecr.io/byui-ai-training:v1
+
+# Restart the web app to apply changes
+az webapp restart --name byui-ai-training --resource-group byui-ai-training-rg
+```
+
+The updated application should be available at `https://byui-ai-training.azurewebsites.net`.
+
+## Updating the Application
+
+When updating the application, follow these steps:
+
+1. Make changes to your code and test locally
+2. Rebuild the Docker image with a new version tag:
+   ```bash
+   docker build -t byui-ai-training:latest --platform linux/amd64 .
+   docker tag byui-ai-training:latest byuiaitraining.azurecr.io/byui-ai-training:v2
+   docker push byuiaitraining.azurecr.io/byui-ai-training:v2
+   ```
+3. Update the web app to use the new version:
+   ```bash
+   az webapp config container set --name byui-ai-training --resource-group byui-ai-training-rg --docker-custom-image-name byuiaitraining.azurecr.io/byui-ai-training:v2
+   az webapp restart --name byui-ai-training --resource-group byui-ai-training-rg
+   ```
+
+## Reference: Initial Setup Steps
+
+These steps were performed once to set up the infrastructure and should not need to be repeated:
+
+```bash
+# Create a resource group
+az group create --name byui-ai-training-rg --location centralus
 
 # Create a container registry
 az acr create --resource-group byui-ai-training-rg --name byuiaitraining --sku Basic
 
-# Log in to the registry
-az acr login --name byuiaitraining
-```
+# Enable admin user for the ACR
+az acr update -n byuiaitraining --admin-enabled true
 
-### Step 3: Tag and Push the Image to ACR
-
-```bash
-# Tag the image for your registry
-docker tag byui-ai-training:latest byuiaitraining.azurecr.io/byui-ai-training:latest
-
-# Push the image to ACR
-docker push byuiaitraining.azurecr.io/byui-ai-training:latest
-```
-
-### Step 4: Create Azure App Service
-
-```bash
 # Create App Service plan
-az appservice plan create --name byui-ai-training-plan --resource-group byui-ai-training-rg --is-linux --sku B1
+az appservice plan create --name byui-ai-training-plan --resource-group byui-ai-training-rg --location centralus --is-linux --sku B1
 
 # Create Web App for Containers
-az webapp create --resource-group byui-ai-training-rg --plan byui-ai-training-plan --name byui-ai-training --deployment-container-image-name byuiaitraining.azurecr.io/byui-ai-training:latest
+az webapp create --resource-group byui-ai-training-rg --plan byui-ai-training-plan --name byui-ai-training --deployment-container-image-name byuiaitraining.azurecr.io/byui-ai-training:v1
 
 # Configure the registry credentials for the web app
-az webapp config container set --name byui-ai-training --resource-group byui-ai-training-rg --docker-custom-image-name byuiaitraining.azurecr.io/byui-ai-training:latest --docker-registry-server-url https://byuiaitraining.azurecr.io --docker-registry-server-user byuiaitraining --docker-registry-server-password $(az acr credential show --name byuiaitraining --query "passwords[0].value" --output tsv)
+az webapp config container set --name byui-ai-training --resource-group byui-ai-training-rg \
+  --docker-custom-image-name byuiaitraining.azurecr.io/byui-ai-training:v1 \
+  --docker-registry-server-url https://byuiaitraining.azurecr.io \
+  --docker-registry-server-user byuiaitraining \
+  --docker-registry-server-password $(az acr credential show --name byuiaitraining --query "passwords[0].value" --output tsv)
+
+# Configure app settings
+az webapp config container set --name byui-ai-training --resource-group byui-ai-training-rg --enable-app-service-storage false
+
+# Configure continuous deployment webhook
+az webapp deployment container config --name byui-ai-training --resource-group byui-ai-training-rg --enable-cd true
+
+# Set the container start time limit
+az webapp config appsettings set --name byui-ai-training --resource-group byui-ai-training-rg --settings WEBSITES_CONTAINER_START_TIME_LIMIT=600
 ```
 
-Your application should now be available at `https://byui-ai-training.azurewebsites.net`.
+## Troubleshooting
 
-## Method 2: Automated Deployment with Azure DevOps
+### Common Issues
 
-### Step 1: Set Up Azure DevOps
+1. **Exec Format Error**:
 
-1. Create a new project in Azure DevOps.
-2. Push your code to the Azure DevOps repository or connect to your GitHub repository.
+   - Symptom: `exec /docker-entrypoint.sh: exec format error` in logs
+   - Solution: Rebuild image with `--platform linux/amd64` flag
 
-### Step 2: Configure Azure Resources
+2. **Container Fails to Start**:
 
-```bash
-# Create resources as in Method 1 (Steps 2 and 4)
-# Make sure your App Service has continuous deployment enabled
-az webapp deployment container config --enable-cd true --name byui-ai-training --resource-group byui-ai-training-rg
-```
+   - Check logs: `az webapp log tail --name byui-ai-training --resource-group byui-ai-training-rg`
+   - Enable diagnostics: `az webapp config appsettings set --name byui-ai-training --resource-group byui-ai-training-rg --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=true`
 
-### Step 3: Set Up Azure Pipeline
+3. **App Not Accessible**:
+   - Check app status: `az webapp show --name byui-ai-training --resource-group byui-ai-training-rg --query "{State:state}"`
+   - Restart the app: `az webapp restart --name byui-ai-training --resource-group byui-ai-training-rg`
 
-1. In Azure DevOps, go to Pipelines and create a new pipeline.
-2. Choose your repository.
-3. When prompted for a template, select "Existing Azure Pipelines YAML file".
-4. Select the `azure-pipelines.yml` file we've created.
-5. Before running the pipeline, you'll need to:
-   - Create a service connection to your Azure subscription
-   - Create a service connection to your Azure Container Registry
-   - Update the pipeline variables with your actual resource names
-
-### Step 4: Run the Pipeline
-
-Run the pipeline to build and deploy your application. The pipeline will:
-
-1. Build the Docker image
-2. Push it to Azure Container Registry
-3. Deploy it to Azure App Service
-
-## Additional Configuration
-
-### Custom Domain
-
-To add a custom domain to your App Service:
-
-```bash
-# Add a custom domain
-az webapp config hostname add --webapp-name byui-ai-training --resource-group byui-ai-training-rg --hostname training.byui.edu
-```
-
-You'll need to configure DNS records for your domain to point to the Azure App Service.
-
-### HTTPS
-
-Enable HTTPS with a managed certificate:
-
-```bash
-# Add a binding for your custom domain
-az webapp config ssl create --resource-group byui-ai-training-rg --name byui-ai-training --hostname training.byui.edu
-```
-
-## Monitoring and Troubleshooting
+## Monitoring and Maintenance
 
 ### View Logs
 
@@ -152,6 +170,10 @@ az appservice plan update --name byui-ai-training-plan --resource-group byui-ai-
 
 Monitor costs by:
 
-1. Setting up a budget in the Azure portal.
-2. Reviewing the Cost Management + Billing section regularly.
-3. Considering scaling down during periods of low traffic.
+1. Setting up a budget in the Azure portal
+2. Reviewing the Cost Management + Billing section regularly
+3. Considering scaling down during periods of low traffic
+
+## Future Consideration: Automated Deployment
+
+If you decide to implement automated deployments in the future, you could use GitHub Actions with the workflow defined in `.github/workflows/azure-deploy.yml`. This would require setting up GitHub repository secrets and configuring webhooks.

@@ -140,6 +140,8 @@ _site
 .cursor/*
 .cursor/
 
+logs/*
+
 .github/workflows/*
 
 # yarn v2

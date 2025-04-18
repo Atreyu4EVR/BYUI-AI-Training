@@ -4,6 +4,7 @@ import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { Fragment, useState } from "react";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   const location = useLocation();
@@ -373,7 +374,10 @@ const Navbar = () => {
                 About
               </NavLink>
             </div>
-            <div className="flex items-center justify-center">
+
+            {/* Add SearchBar and ThemeToggle in a flex container */}
+            <div className="flex items-center space-x-2">
+              <SearchBar />
               <ThemeToggle />
             </div>
           </div>

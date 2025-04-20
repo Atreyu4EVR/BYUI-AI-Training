@@ -23,7 +23,7 @@ const Home = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Link to="/getting-started" className="btn-primary">
+              <Link to="/lesson-one" className="btn-primary">
                 Get started
               </Link>
               <Link

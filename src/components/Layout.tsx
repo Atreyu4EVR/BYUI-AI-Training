@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     "/history",
     "/capabilities",
     "/how-it-works",
-    "/prompting",
+    "/lesson-one",
     "/minimal",
 
     // Lesson Two
@@ -31,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     "/context-is-everything",
     "/prompt-basics",
     "/advanced-prompting",
-    "/moderate",
+    "/prompt-feedback",
 
     // Lesson Three
     "/lesson-three",

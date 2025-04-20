@@ -6,8 +6,12 @@ import Prerequisites from "./components/Prerequisites";
 import History from "./components/History";
 import Capabilities from "./components/Capabilities";
 import HowItWorks from "./components/HowItWorks";
-import Prompting from "./components/Prompting";
-import LessonTwo from "./components/LessonTwo";
+// import LessonTwo from "./components/LessonTwo"; // Temporarily comment this out
+import ContextIsEverything from "./components/ContextIsEverything";
+import PromptBasics from "./components/PromptBasics";
+import AdvancedPrompting from "./components/AdvancedPrompting";
+import LessonTwoOverview from "./components/LessonTwoOverview";
+import LessonOneOverview from "./components/LessonOneOverview";
 import AboutPage from "./components/About";
 import Minimal from "./components/Minimal";
 import Moderate from "./components/Moderate";
@@ -16,6 +20,7 @@ import GettingStarted from "./components/GettingStarted";
 import ToolComparison from "./components/ToolComparison";
 import ProductRankings from "./components/ProductRankings";
 import Glossary from "./components/Glossary";
+import PromptFeedback from "./components/PromptFeedback";
 
 // Placeholder component for pages not yet created
 interface PlaceholderPageProps {
@@ -58,28 +63,24 @@ const AppRoutes = () => (
       <Route path="prerequisites" element={<Prerequisites />} />
 
       {/* Lesson One Routes */}
+      <Route path="lesson-one" element={<LessonOneOverview />} />
       <Route path="getting-started" element={<GettingStarted />} />
       <Route path="history" element={<History />} />
       <Route path="capabilities" element={<Capabilities />} />
       <Route path="how-it-works" element={<HowItWorks />} />
-      <Route path="prompting" element={<Prompting />} />
+      <Route
+        path="prompting"
+        element={<PlaceholderPage title="Introduction to Prompting" />}
+      />
       <Route path="minimal" element={<Minimal />} />
 
       {/* Lesson Two Routes */}
-      <Route path="lesson-two" element={<LessonTwo />} />
-      <Route
-        path="context-is-everything"
-        element={<PlaceholderPage title="Context is Everything" />}
-      />
-      <Route
-        path="prompt-basics"
-        element={<PlaceholderPage title="Prompt Basics" />}
-      />
-      <Route
-        path="advanced-prompting"
-        element={<PlaceholderPage title="Advanced Prompting" />}
-      />
+      <Route path="lesson-two" element={<LessonTwoOverview />} />
+      <Route path="context-is-everything" element={<ContextIsEverything />} />
+      <Route path="prompt-basics" element={<PromptBasics />} />
+      <Route path="advanced-prompting" element={<AdvancedPrompting />} />
       <Route path="moderate" element={<Moderate />} />
+      <Route path="prompt-feedback" element={<PromptFeedback />} />
 
       {/* Lesson Three Routes */}
       <Route

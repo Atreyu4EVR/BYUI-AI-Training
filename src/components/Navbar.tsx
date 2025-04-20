@@ -61,6 +61,7 @@ const Navbar = () => {
 
   // Check if any lesson one paths are active
   const isLessonOneActive = isPathActive([
+    "lesson-one",
     "getting-started",
     "history",
     "capabilities",
@@ -183,6 +184,14 @@ const Navbar = () => {
 
                       {activeSubmenu === "lessonOne" && (
                         <div className="pl-2 border-l border-byui-dark-border ml-4 mt-1">
+                          <MenuItem>
+                            <Link
+                              to="/lesson-one"
+                              className={getMenuItemClass("lesson-one")}
+                            >
+                              Overview
+                            </Link>
+                          </MenuItem>
                           <MenuItem>
                             <Link
                               to="/getting-started"

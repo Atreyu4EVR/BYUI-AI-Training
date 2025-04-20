@@ -10,20 +10,19 @@ const LessonNavigation: React.FC<LessonNavigationProps> = ({ currentPath }) => {
   // Define the lesson structure with separate lessons
   const lessonStructure = {
     lessonOne: [
+      { path: "/lesson-one", title: "Overview" },
       { path: "/getting-started", title: "Getting Started" },
       { path: "/history", title: "History of AI" },
       { path: "/capabilities", title: "AI Capabilities" },
       { path: "/how-it-works", title: "How Generative AI Works" },
-      { path: "/prompting", title: "Introduction to Prompting" },
-      // Activity - assuming this is currently /minimal since that seems to be part of the sequence
       { path: "/minimal", title: "Activity: Minimal Context" },
     ],
     lessonTwo: [
       { path: "/lesson-two", title: "Overview" },
       { path: "/context-is-everything", title: "Context is Everything" },
-      { path: "/prompt-basics", title: "Prompt Basics" },
-      { path: "/advanced-prompting", title: "Advanced Prompting" },
-      { path: "/moderate", title: "Activity: Moderate Context" },
+      { path: "/prompt-basics", title: "Understanding AI Prompts" },
+      { path: "/advanced-prompting", title: "Effective Prompt Engineering" },
+      { path: "/prompt-feedback", title: "Activity: Prompt Feedback" },
     ],
     lessonThree: [
       { path: "/lesson-three", title: "Overview" },

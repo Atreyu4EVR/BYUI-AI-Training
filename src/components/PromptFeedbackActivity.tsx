@@ -126,40 +126,14 @@ const PromptFeedbackActivity: React.FC = () => {
     <div>
       <div>
         <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">
-          Enter Your Prompt
+          Instructions
         </h2>
         <p className="mb-4 text-slate-700 dark:text-slate-300">
           Type a prompt you would use when interacting with an AI system. Our
           system will analyze it and provide feedback based on prompt
           engineering best practices.
         </p>
-        <div className="mb-2">
-          <button
-            className="text-sm text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 underline"
-            onClick={() => setShowExamples(!showExamples)}
-          >
-            {showExamples ? "Hide examples" : "Show me some examples"}
-          </button>
 
-          {showExamples && (
-            <div className="mt-2 mb-4 bg-slate-50 dark:bg-slate-700/50 p-3 rounded border border-slate-200 dark:border-slate-600">
-              <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
-                Click an example to use it:
-              </p>
-              <div className="space-y-2">
-                {EXAMPLE_PROMPTS.map((prompt, index) => (
-                  <button
-                    key={index}
-                    className="block w-full text-left px-3 py-2 text-sm rounded hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300"
-                    onClick={() => handleSelectExample(prompt)}
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
         <textarea
           className="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 h-32 text-slate-800 dark:text-white dark:bg-slate-700"
           value={userPrompt}
@@ -216,18 +190,6 @@ const PromptFeedbackActivity: React.FC = () => {
           {error}
         </div>
       )}
-
-      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md border border-blue-200 dark:border-blue-800">
-        <h3 className="font-semibold text-blue-800 dark:text-blue-300">
-          About This Activity
-        </h3>
-        <p className="text-blue-700 dark:text-blue-400 mt-2">
-          This activity helps you practice the prompt engineering principles
-          from Lesson 2. Enter a prompt you might use with an AI system, and our
-          tool will analyze it for context, specificity, structure, and
-          constraints. Use the feedback to improve your prompting skills!
-        </p>
-      </div>
     </div>
   );
 };

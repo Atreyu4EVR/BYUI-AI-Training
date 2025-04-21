@@ -1,68 +1,97 @@
 import React from "react";
-import { Lightbulb, Users, MapPin, Book, Star, Navigation } from "lucide-react";
+import {
+  Lightbulb,
+  CircleHelp,
+  Users,
+  MapPin,
+  Book,
+  Star,
+  Navigation,
+  PersonStanding,
+  GraduationCap,
+  ArrowRight,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const GettingStarted = () => {
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="bg-white p-6 sm:p-8 rounded-lg shadow-sm">
-        <header className="mb-10">
-          <h1 className="text-3xl font-bold text-slate-900 mb-3">
-            Getting Started with AI
-          </h1>
-          <p className="text-lg text-slate-600">
-            Welcome to our AI training program designed specifically for
-            BYU-Idaho administrators. Whether you're curious about AI or feeling
-            a bit uncertain about its relevance to your work, this training will
-            provide you with a solid foundation and practical skills for using
-            AI tools effectively in your administrative role.
-          </p>
-        </header>
+    <div className="relative">
+      <div className="page-container">
+        {/* Start Training Button - positioned to align with container edge */}
+        <div className="absolute top-6 right-0 transform -translate-x-6 z-10">
+          <Link
+            to="/lesson-one"
+            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg font-medium flex items-center"
+          >
+            Next: Start Training
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </div>
 
-        {/* What You'll Learn */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-            <Book className="mr-2 text-green-600" />
-            What You'll Learn in Lesson One
-          </h2>
+        <div className="page-content">
+          <header className="page-header">
+            <h1 className="page-title">Getting Started</h1>
+            <p className="page-subtitle">
+              Welcome to the Artificial Intelligence Training for BYU-Idaho
+            </p>
+          </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div className="p-5 rounded-lg shadow-sm border-t-4 border-cyan-400">
-              <h3 className="font-bold text-slate-800 mb-2">History of AI</h3>
-              <p className="text-slate-700">
-                Discover the key milestones in AI development from theoretical
-                concepts to today's powerful tools that are changing how we
-                work.
-              </p>
-            </div>
+          {/* What is the Artificial Intelligence Training? */}
+          <section className="mb-10">
+            <h2 className="section-header">
+              <CircleHelp className="mr-2 text-indigo-600" />
+              What is this Training?
+            </h2>
+            <p className="text-primary mb-4">
+              This training is designed by the AI team at BYU-Idaho to help you
+              understand the basics of artificial intelligence (AI) and how it
+              can be used to support your work at BYU-Idaho.
+            </p>
+          </section>
 
-            <div className="p-5 rounded-lg shadow-sm border-t-4 border-green-400">
-              <h3 className="font-bold text-slate-800 mb-2">AI Capabilities</h3>
-              <p className="text-slate-700">
-                Explore what different types of AI systems can (and cannot) do,
-                with a focus on text, vision, audio, and multimodal AI.
-              </p>
-            </div>
+          {/* Who This Training Is For */}
+          <section className="mb-10">
+            <h2 className="section-header">
+              <Users className="mr-2 text-indigo-600" />
+              Who This Training Is For
+            </h2>
+            <p className="text-primary mb-4">
+              Short answer: all BYU-Idaho employees interested in artificial
+              intelligence—whether you're tech-savvy or have never worked with
+              AI before. The course is designed to make AI concepts
+              approachable, giving you practical skills to incorporate these
+              powerful tools into your daily work.
+            </p>
+          </section>
 
-            <div className="p-5 rounded-lg shadow-sm border-t-4 border-purple-400">
-              <h3 className="font-bold text-slate-800 mb-2">How AI Works</h3>
-              <p className="text-slate-700">
-                Learn the fundamental concepts behind AI systems like
-                tokenization and prediction in accessible, non-technical
-                language.
-              </p>
-            </div>
-          </div>
-        </section>
+          {/* What You'll Learn */}
+          <section className="mb-10">
+            <h2 className="section-header">
+              <GraduationCap className="mr-2 text-indigo-600" />
+              What You'll Learn
+            </h2>
 
-        {/* How to Navigate this Training */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-            <Navigation className="mr-2 text-indigo-600" />
-            How to Navigate this Training
-          </h2>
+            <p className="text-primary mb-4">
+              This training covers the fundamentals of artificial intelligence,
+              which includes:
+            </p>
+            <ul className="list-disc pl-5 text-primary space-y-2">
+              <li>History and evolution of AI</li>
+              <li>Basic concepts and terminology</li>
+              <li>Current capabilities of AI</li>
+              <li>Brief overview of how AI works</li>
+              <li>Best practices for using AI tools</li>
+            </ul>
+          </section>
 
-          <div className="p-5 rounded-lg shadow-sm border border-slate-200">
-            <p className="text-slate-700 mb-4">
+          {/* How to Navigate this Training */}
+          <section className="mb-10">
+            <h2 className="section-header">
+              <Navigation className="mr-2 text-indigo-600" />
+              How to Navigate this Training
+            </h2>
+
+            <p className="text-primary mb-4">
               This training is designed to be interactive and self-paced. Here's
               how to get the most out of it:
             </p>
@@ -73,7 +102,7 @@ const GettingStarted = () => {
                   <span className="text-indigo-600 font-bold">1</span>
                 </div>
                 <div>
-                  <p className="text-slate-700">
+                  <p className="text-primary">
                     <strong>Follow the sequence:</strong> Use the navigation
                     buttons at the top of the page to move through the lessons.
                   </p>
@@ -85,7 +114,7 @@ const GettingStarted = () => {
                   <span className="text-indigo-600 font-bold">2</span>
                 </div>
                 <div>
-                  <p className="text-slate-700">
+                  <p className="text-primary">
                     <strong>Try the exercises:</strong> Complete the AI
                     prompting exercises to apply what you've learned. There's no
                     better way to learn than by doing.
@@ -98,7 +127,7 @@ const GettingStarted = () => {
                   <span className="text-indigo-600 font-bold">3</span>
                 </div>
                 <div>
-                  <p className="text-slate-700">
+                  <p className="text-primary">
                     <strong>Take notes:</strong> Jot down ideas for how you
                     might apply AI tools to your specific administrative
                     responsibilities.
@@ -111,7 +140,7 @@ const GettingStarted = () => {
                   <span className="text-indigo-600 font-bold">4</span>
                 </div>
                 <div>
-                  <p className="text-slate-700">
+                  <p className="text-primary">
                     <strong>Ask questions:</strong> Don't hesitate to ask for
                     clarification during the training session if anything is
                     unclear.
@@ -119,22 +148,20 @@ const GettingStarted = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Prerequisites */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-            <MapPin className="mr-2 text-red-500" />
-            Prerequisites
-          </h2>
+          {/* Prerequisites */}
+          <section className="mb-10">
+            <h2 className="section-header">
+              <MapPin className="mr-2 text-red-500" />
+              Prerequisites
+            </h2>
 
-          <div className="p-5 rounded-lg shadow-sm border border-slate-200">
-            <p className="text-slate-700 mb-4">
+            <p className="text-primary mb-4">
               To participate fully in this training, please ensure you have:
             </p>
 
-            <ul className="list-disc pl-5 text-slate-700 space-y-2">
+            <ul className="list-disc pl-5 text-primary space-y-2">
               <li>
                 Created a free ChatGPT account using your BYU-Idaho email
                 address
@@ -143,31 +170,31 @@ const GettingStarted = () => {
               <li>A basic familiarity with your computer and web browsing</li>
             </ul>
 
-            <div className="mt-4 p-4 rounded-lg border border-amber-300">
-              <p className="text-slate-700">
+            <div className="note-callout mt-4">
+              <p className="text-primary">
                 <strong>Note:</strong> No technical background is required for
                 this training. We've designed it to be accessible for all
                 BYU-Idaho administrators regardless of your previous experience
                 with technology.
               </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <footer className="text-center text-slate-500 text-sm border-t border-slate-200 pt-4">
-          <p>
-            This training aligns with
-            <a
-              href="https://www.byui.edu/genai/"
-              className="text-cyan-600 hover:underline mx-1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              BYU-Idaho's AI Guidelines
-            </a>
-            and is designed to support the university's mission.
-          </p>
-        </footer>
+          <footer className="text-center text-slate-500 text-sm border-t border-slate-200 pt-4">
+            <p>
+              This training aligns with
+              <a
+                href="https://www.byui.edu/genai/"
+                className="text-cyan-600 hover:underline mx-1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                BYU-Idaho's AI Guidelines
+              </a>
+              and is designed to support the university's mission.
+            </p>
+          </footer>
+        </div>
       </div>
     </div>
   );

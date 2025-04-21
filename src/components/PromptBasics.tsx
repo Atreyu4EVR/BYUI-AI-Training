@@ -6,9 +6,7 @@ const PromptBasics = () => {
     <div className="page-container">
       <div className="page-content">
         <header className="page-header">
-          <h1 className="page-title">
-            Understanding AI Prompts: Beyond the Basics
-          </h1>
+          <h1 className="page-title">Prompt Basics</h1>
           <p className="page-subtitle">
             Learning how Large Language Models work and how to communicate with
             them effectively

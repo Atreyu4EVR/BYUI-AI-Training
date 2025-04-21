@@ -11,19 +11,22 @@ const LessonNavigation: React.FC<LessonNavigationProps> = ({ currentPath }) => {
   const lessonStructure = {
     lessonOne: [
       { path: "/lesson-one", title: "Overview" },
-      { path: "/getting-started", title: "Getting Started" },
+      { path: "/artificial-intelligence", title: "What is AI?" },
       { path: "/history", title: "History of AI" },
+      { path: "/ai-context", title: "Context" },
       { path: "/capabilities", title: "AI Capabilities" },
       { path: "/how-it-works", title: "How Generative AI Works" },
-      { path: "/minimal", title: "Activity: Minimal Context" },
+      { path: "/token-prediction", title: "Token Prediction Activity" },
     ],
     lessonTwo: [
       { path: "/lesson-two", title: "Overview" },
       { path: "/context-is-everything", title: "Context is Everything" },
       { path: "/prompt-basics", title: "Understanding AI Prompts" },
       { path: "/advanced-prompting", title: "Effective Prompt Engineering" },
-      { path: "/prompt-feedback", title: "Activity: Prompt Feedback" },
+      { path: "/prompt-feedback", title: "Practice Prompting" },
     ],
+    // Temporarily hide Lesson Three
+    /*
     lessonThree: [
       { path: "/lesson-three", title: "Overview" },
       { path: "/lesson-three-topic-1", title: "Placeholder 1" },
@@ -31,6 +34,7 @@ const LessonNavigation: React.FC<LessonNavigationProps> = ({ currentPath }) => {
       { path: "/lesson-three-topic-3", title: "Placeholder 3" },
       { path: "/comprehensive", title: "Activity: Comprehensive Context" },
     ],
+    */
   };
 
   // Determine which lesson the current path belongs to

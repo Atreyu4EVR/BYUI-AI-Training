@@ -185,24 +185,6 @@ const LessonTwoOverview = () => {
                 </a>
               </div>
             </div>
-
-            <div className="numbered-item">
-              <div className="number-circle">
-                <span className="number">5</span>
-              </div>
-              <div>
-                <p className="text-primary font-semibold">
-                  Prompt Feedback Activity
-                </p>
-                <p className="text-primary">
-                  Get AI-powered feedback on your prompts to improve your AI
-                  communication skills.
-                </p>
-                <a href="/prompt-feedback" className="link-standard">
-                  Proceed to Prompt Feedback Activity →
-                </a>
-              </div>
-            </div>
           </div>
         </section>
 

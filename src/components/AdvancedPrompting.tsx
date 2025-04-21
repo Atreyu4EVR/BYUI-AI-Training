@@ -6,9 +6,7 @@ const AdvancedPrompting = () => {
     <div className="page-container">
       <div className="page-content">
         <header className="page-header">
-          <h1 className="page-title">
-            Effective Prompt Engineering: Principles and Practices
-          </h1>
+          <h1 className="page-title">Advanced Prompting</h1>
           <p className="page-subtitle">
             Advanced techniques for crafting effective prompts for AI systems
           </p>

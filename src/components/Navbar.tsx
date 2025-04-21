@@ -62,12 +62,11 @@ const Navbar = () => {
   // Check if any lesson one paths are active
   const isLessonOneActive = isPathActive([
     "lesson-one",
-    "getting-started",
     "history",
     "capabilities",
     "how-it-works",
-    "prompting",
-    "minimal",
+    "artificial-intelligence",
+    "ai-context",
   ]);
 
   // Check if any lesson two paths are active
@@ -76,7 +75,7 @@ const Navbar = () => {
     "context-is-everything",
     "prompt-basics",
     "advanced-prompting",
-    "moderate",
+    "prompt-feedback",
   ]);
 
   // Check if any lesson three paths are active
@@ -90,7 +89,11 @@ const Navbar = () => {
 
   // Overall check if any lesson is active
   const isAnyLessonActive =
-    isLessonOneActive || isLessonTwoActive || isLessonThreeActive;
+    isLessonOneActive ||
+    isLessonTwoActive ||
+    // Commented out since Lesson Three is hidden
+    // isLessonThreeActive ||
+    isPathActive(["getting-started"]);
 
   // Check if any resource paths are active
   const isAnyResourceActive = isPathActive([
@@ -134,19 +137,7 @@ const Navbar = () => {
                 Home
               </NavLink>
 
-              {/* Prerequisites */}
-              <NavLink
-                to="/prerequisites"
-                className={({ isActive }) =>
-                  `${baseLinkClasses} ${
-                    isActive ? "bg-white/20 text-white" : "navbar-link"
-                  }`
-                }
-              >
-                Prerequisites
-              </NavLink>
-
-              {/* Lessons Dropdown */}
+              {/* Training Dropdown (formerly Lessons) */}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton
@@ -156,7 +147,7 @@ const Navbar = () => {
                         : "navbar-link"
                     } inline-flex items-center`}
                   >
-                    Lessons
+                    Training
                     <ChevronDownIcon
                       aria-hidden="true"
                       className="-mr-1 ml-1 size-5"
@@ -167,6 +158,16 @@ const Navbar = () => {
                   transition
                   className="absolute left-0 md:left-auto md:right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                 >
+                  {/* Getting Started */}
+                  <MenuItem>
+                    <Link
+                      to="/getting-started"
+                      className={getMenuItemClass("getting-started")}
+                    >
+                      Getting Started
+                    </Link>
+                  </MenuItem>
+
                   {/* Lesson One Submenu */}
                   <Fragment>
                     <div className="px-1 py-1">
@@ -194,10 +195,12 @@ const Navbar = () => {
                           </MenuItem>
                           <MenuItem>
                             <Link
-                              to="/getting-started"
-                              className={getMenuItemClass("getting-started")}
+                              to="/artificial-intelligence"
+                              className={getMenuItemClass(
+                                "artificial-intelligence"
+                              )}
                             >
-                              Getting Started
+                              What is AI?
                             </Link>
                           </MenuItem>
                           <MenuItem>
@@ -206,6 +209,14 @@ const Navbar = () => {
                               className={getMenuItemClass("history")}
                             >
                               History
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/ai-context"
+                              className={getMenuItemClass("ai-context")}
+                            >
+                              Context
                             </Link>
                           </MenuItem>
                           <MenuItem>
@@ -226,18 +237,10 @@ const Navbar = () => {
                           </MenuItem>
                           <MenuItem>
                             <Link
-                              to="/prompting"
-                              className={getMenuItemClass("prompting")}
+                              to="/token-prediction"
+                              className={getMenuItemClass("token-prediction")}
                             >
-                              Introduction to Prompting
-                            </Link>
-                          </MenuItem>
-                          <MenuItem>
-                            <Link
-                              to="/minimal"
-                              className={getMenuItemClass("minimal")}
-                            >
-                              Activity: Minimal Context
+                              Activity: Token Prediction
                             </Link>
                           </MenuItem>
                         </div>
@@ -298,10 +301,10 @@ const Navbar = () => {
                           </MenuItem>
                           <MenuItem>
                             <Link
-                              to="/moderate"
-                              className={getMenuItemClass("moderate")}
+                              to="/prompt-feedback"
+                              className={getMenuItemClass("prompt-feedback")}
                             >
-                              Activity: Moderate Context
+                              Activity: Prompt Feedback
                             </Link>
                           </MenuItem>
                         </div>
@@ -309,7 +312,7 @@ const Navbar = () => {
                     </div>
                   </Fragment>
 
-                  {/* Lesson Three Submenu */}
+                  {/* Temporarily hide Lesson Three Submenu 
                   <Fragment>
                     <div className="px-1 py-1">
                       <button
@@ -376,6 +379,7 @@ const Navbar = () => {
                       )}
                     </div>
                   </Fragment>
+                  */}
                 </MenuItems>
               </Menu>
 

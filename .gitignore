@@ -7,6 +7,10 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+# macOS specific files
+.DS_Store
+.DS_Store?
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -150,6 +154,9 @@ logs/*
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+lessons/*
+*lessons
 
 # Vite build output
 dist

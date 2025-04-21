@@ -1,4 +1,5 @@
 import { Star, Zap, Cpu, Brain, BookOpen, Rocket } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const History = () => {
   // Renamed component
@@ -176,7 +177,7 @@ const History = () => {
           featured: true,
         },
         {
-          year: "2023-Present",
+          year: "2023+",
           title: "Multimodal AI",
           description:
             "AI systems now work across text, images, audio, and video, with increasing capabilities in reasoning and creativity.",
@@ -201,15 +202,16 @@ const History = () => {
         {/* Intro box styling */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-slate-800 mb-2">
-            What is Artificial Intelligence?
+            Overview
           </h2>
           <p className="text-slate-700">
-            Artificial Intelligence (AI) refers to the simulation of human
-            intelligence in machines programmed to think and learn like humans.
-            The field encompasses machine learning, natural language processing,
-            computer vision, and more. AI systems can analyze data, recognize
-            patterns, solve problems, and continuously improve their performance
-            over time.
+            Understanding the history of artificial intelligence helps us
+            appreciate both how far we've come and why today's AI tools work the
+            way they do. This historical perspective reveals important
+            patterns—periods of excitement followed by limitations,
+            breakthroughs that changed what's possible, and the gradual shift
+            from specialized research tools to practical applications that
+            affect our daily work at BYU-Idaho.
           </p>
         </div>
 
@@ -246,7 +248,7 @@ const History = () => {
                       <span
                         className={`text-sm font-bold timeline-year ${
                           milestone.featured ? "text-white" : "text-slate-700"
-                        }`}
+                        } ${milestone.year.length > 5 ? "text-xs" : "text-sm"}`}
                       >
                         {milestone.year}
                       </span>
@@ -276,6 +278,20 @@ const History = () => {
           ))}
         </div>
 
+        <div className="mt-10 p-5">
+          <h2 className="text-xl font-bold text-slate-800 mb-3">Conclusion</h2>
+          <p className="text-slate-700">
+            As we examine this history, several patterns emerge that inform how
+            we approach AI today. First, AI progress has been cyclical, with
+            periods of breakthrough followed by reality checks. Second, the most
+            successful applications have focused on augmenting human
+            capabilities rather than replacing them. Finally, each generation of
+            AI tools has become more accessible, moving from specialized
+            research projects to the user-friendly applications we're exploring
+            in this training.
+          </p>
+        </div>
+
         {/* Future outlook box */}
         <div className="mt-10 p-5 rounded-lg border border-slate-200">
           <h2 className="text-xl font-bold text-slate-800 mb-3">
@@ -288,6 +304,20 @@ const History = () => {
             coming years may bring advancements in AI reasoning, multimodal
             systems that combine different types of data, and increasingly
             personalized AI assistants.
+          </p>
+        </div>
+
+        {/* Add a footer section with link to the next lesson */}
+        <div className="text-center mt-12 text-slate-600 dark:text-slate-400">
+          <p>
+            Continue to{" "}
+            <Link
+              to="/ai-context"
+              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Context: AI at BYU-Idaho
+            </Link>{" "}
+            →
           </p>
         </div>
 

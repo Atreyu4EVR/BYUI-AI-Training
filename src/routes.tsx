@@ -2,10 +2,11 @@ import React from "react";
 import { Route, Routes, Navigate, Link } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
-import Prerequisites from "./components/Prerequisites";
 import History from "./components/History";
 import Capabilities from "./components/Capabilities";
 import HowItWorks from "./components/HowItWorks";
+import ArtificialIntelligence from "./components/ArtificialIntelligence";
+import AIContext from "./components/AIContext";
 // import LessonTwo from "./components/LessonTwo"; // Temporarily comment this out
 import ContextIsEverything from "./components/ContextIsEverything";
 import PromptBasics from "./components/PromptBasics";
@@ -21,6 +22,7 @@ import ToolComparison from "./components/ToolComparison";
 import ProductRankings from "./components/ProductRankings";
 import Glossary from "./components/Glossary";
 import PromptFeedback from "./components/PromptFeedback";
+import TokenPrediction from "./components/TokenPrediction";
 
 // Placeholder component for pages not yet created
 interface PlaceholderPageProps {
@@ -60,14 +62,19 @@ const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path="prerequisites" element={<Prerequisites />} />
 
       {/* Lesson One Routes */}
       <Route path="lesson-one" element={<LessonOneOverview />} />
       <Route path="getting-started" element={<GettingStarted />} />
+      <Route
+        path="artificial-intelligence"
+        element={<ArtificialIntelligence />}
+      />
       <Route path="history" element={<History />} />
+      <Route path="ai-context" element={<AIContext />} />
       <Route path="capabilities" element={<Capabilities />} />
       <Route path="how-it-works" element={<HowItWorks />} />
+      <Route path="token-prediction" element={<TokenPrediction />} />
       <Route
         path="prompting"
         element={<PlaceholderPage title="Introduction to Prompting" />}
@@ -109,10 +116,7 @@ const AppRoutes = () => (
 
       {/* Legacy URL support */}
       <Route path="index.html" element={<Navigate to="/" replace />} />
-      <Route
-        path="prerequisites.html"
-        element={<Navigate to="/prerequisites" replace />}
-      />
+      <Route path="prerequisites.html" element={<Navigate to="/" replace />} />
       <Route path="history.html" element={<Navigate to="/history" replace />} />
       <Route
         path="capabilities.html"

@@ -1,11 +1,10 @@
 import React, { ReactNode } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import LessonNavigation from "./LessonNavigation";
 import BackToTop from "./BackToTop";
 import { useTheme } from "../context/ThemeContext";
-import { useLocation } from "react-router-dom";
 
 // Define props interface with children
 interface LayoutProps {
@@ -19,12 +18,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Determine if the current route is a lesson page
   const isLessonPage = [
     // Lesson One
-    "/getting-started",
     "/history",
     "/capabilities",
     "/how-it-works",
     "/lesson-one",
-    "/minimal",
+    "/token-prediction",
+    "/artificial-intelligence",
+    "/ai-context",
 
     // Lesson Two
     "/lesson-two",
@@ -33,12 +33,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     "/advanced-prompting",
     "/prompt-feedback",
 
-    // Lesson Three
+    // Temporarily hide Lesson Three
+    /*
     "/lesson-three",
     "/lesson-three-topic-1",
     "/lesson-three-topic-2",
     "/lesson-three-topic-3",
     "/comprehensive",
+    */
   ].includes(location.pathname);
 
   return (

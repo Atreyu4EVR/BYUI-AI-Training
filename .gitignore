@@ -155,8 +155,13 @@ logs/*
 .yarn/install-state.gz
 .pnp.*
 
+# Lesson files - more specific patterns
+lessons/
 lessons/*
-*lessons
+lessons/**/*.md
+lessons/LESSON_*.md
+lessons/LESSON_PLAN.md
+lessons/principles.md
 
 # Vite build output
 dist

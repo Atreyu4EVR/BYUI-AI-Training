@@ -1,42 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
+    <title>Redirecting...</title>
     <script>
-        // Single Page App GitHub Pages routing hack
-        // Get the repository name from the URL
-        const repoName = location.pathname.split('/')[1];
-        const segmentCount = repoName ? 1 : 0; // Subtract 1 if there's a repo name
+        // Get the current path excluding the domain
+        const path = window.location.pathname;
 
-        // Extract the path after the repository name
-        const path = location.pathname
-            .split('/')
-            .slice(segmentCount + 1)
-            .join('/');
+        // For GitHub Pages: 
+        // Strip the repo name if it's part of the path for gh-pages
+        // Adjust this if your repo name is different
+        let cleanPath = path;
+        const repoName = '/Training-BYUI-Administrators';
+        if (cleanPath.startsWith(repoName)) {
+            cleanPath = cleanPath.substring(repoName.length);
+        }
 
         // Construct the redirect URL
-        const redirectUrl =
-            location.origin +
-            (repoName ? '/' + repoName : '') +
-            '/index.html?p=' +
-            encodeURIComponent(path || '') +
-            (location.search ? '&' + location.search.slice(1) : '') +
-            location.hash;
+        // If deployed at the root, this will redirect to /?p=/path
+        // If deployed in a subfolder, it handles that too
+        const baseUrl = window.location.origin +
+            window.location.pathname.split('/').slice(0, -1).join('/');
+        const redirectUrl = baseUrl + (baseUrl.endsWith('/') ? '' : '/') +
+            'index.html?p=' + encodeURIComponent(cleanPath);
 
-        // Redirect to the index page
+        // Redirect to the main app
         window.location.replace(redirectUrl);
     </script>
 </head>
 
 <body>
-    <div
-        style="text-align: center; padding: 50px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-        <h1>Redirecting...</h1>
-        <p>If you are not redirected automatically, <a href="index.html">click here</a>.</p>
-    </div>
+    <p>Redirecting to the application...</p>
 </body>
 
 </html>

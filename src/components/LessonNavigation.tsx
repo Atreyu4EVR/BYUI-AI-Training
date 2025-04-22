@@ -7,56 +7,116 @@ interface LessonNavigationProps {
 }
 
 const LessonNavigation: React.FC<LessonNavigationProps> = ({ currentPath }) => {
-  // Define the lesson order
-  const lessonOrder = [
-    { path: "/getting-started", title: "Getting Started" },
-    { path: "/history", title: "History of AI" },
-    { path: "/capabilities", title: "AI Capabilities" },
-    { path: "/how-it-works", title: "How Generative AI Works" },
-    { path: "/tool-comparison", title: "AI Tool Comparison" },
-    { path: "/minimal", title: "Minimal Context" },
-    { path: "/moderate", title: "Moderate Context" },
-    { path: "/comprehensive", title: "Comprehensive Context" },
-  ];
+  // Define the lesson structure with separate lessons
+  const lessonStructure = {
+    lessonOne: [
+      { path: "/lesson-one", title: "Overview" },
+      { path: "/artificial-intelligence", title: "What is AI?" },
+      { path: "/history", title: "History of AI" },
+      { path: "/ai-context", title: "Context" },
+      { path: "/capabilities", title: "AI Capabilities" },
+      { path: "/how-it-works", title: "How Generative AI Works" },
+      { path: "/token-prediction", title: "Token Prediction Activity" },
+    ],
+    lessonTwo: [
+      { path: "/lesson-two", title: "Overview" },
+      { path: "/context-is-everything", title: "Context is Everything" },
+      { path: "/prompt-basics", title: "Understanding AI Prompts" },
+      { path: "/advanced-prompting", title: "Effective Prompt Engineering" },
+      { path: "/prompt-feedback", title: "Practice Prompting" },
+    ],
+    // Temporarily hide Lesson Three
+    /*
+    lessonThree: [
+      { path: "/lesson-three", title: "Overview" },
+      { path: "/lesson-three-topic-1", title: "Placeholder 1" },
+      { path: "/lesson-three-topic-2", title: "Placeholder 2" },
+      { path: "/lesson-three-topic-3", title: "Placeholder 3" },
+      { path: "/comprehensive", title: "Activity: Comprehensive Context" },
+    ],
+    */
+  };
 
-  // Find the current lesson index
-  const currentIndex = lessonOrder.findIndex(
-    (lesson) => lesson.path === currentPath
+  // Determine which lesson the current path belongs to
+  const getCurrentLesson = () => {
+    for (const [lessonKey, lessonPages] of Object.entries(lessonStructure)) {
+      if (lessonPages.some((page) => page.path === currentPath)) {
+        return lessonKey;
+      }
+    }
+    return null;
+  };
+
+  const currentLesson = getCurrentLesson();
+
+  // If we can't determine the lesson, return null
+  if (!currentLesson) {
+    return null;
+  }
+
+  // Get the pages for the current lesson
+  const currentLessonPages =
+    lessonStructure[currentLesson as keyof typeof lessonStructure];
+
+  // Find the current page index
+  const currentIndex = currentLessonPages.findIndex(
+    (page) => page.path === currentPath
   );
 
-  // Get current lesson
-  const currentLesson = lessonOrder[currentIndex];
+  // Get the current page
+  const currentPage = currentLessonPages[currentIndex];
 
-  // Determine previous and next lessons
-  const previousLesson =
-    currentIndex > 0 ? lessonOrder[currentIndex - 1] : null;
-  const nextLesson =
-    currentIndex < lessonOrder.length - 1
-      ? lessonOrder[currentIndex + 1]
+  // Determine previous and next pages
+  const previousPage =
+    currentIndex > 0 ? currentLessonPages[currentIndex - 1] : null;
+  const nextPage =
+    currentIndex < currentLessonPages.length - 1
+      ? currentLessonPages[currentIndex + 1]
       : null;
+
+  // Get a friendly lesson name
+  const getLessonName = (lessonKey: string) => {
+    switch (lessonKey) {
+      case "lessonOne":
+        return "Lesson One";
+      case "lessonTwo":
+        return "Lesson Two";
+      case "lessonThree":
+        return "Lesson Three";
+      default:
+        return "Lesson";
+    }
+  };
 
   return (
     <div className="w-full mb-4 pt-12 pb-3">
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        {/* Display which lesson we're in */}
+        <div className="text-sm text-center mb-2 text-byui-light-text-secondary dark:text-byui-dark-text-secondary">
+          {getLessonName(currentLesson)}
+        </div>
+
         {/* Progress Indicator */}
         <div className="mb-3">
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
             <div
               className="bg-byui-dark-blue dark:bg-byui-brand-blue-2 h-2.5 rounded-full transition-all duration-300"
               style={{
-                width: `${((currentIndex + 1) / lessonOrder.length) * 100}%`,
+                width: `${
+                  ((currentIndex + 1) / currentLessonPages.length) * 100
+                }%`,
               }}
             ></div>
           </div>
           <div className="text-xs text-byui-light-text-secondary dark:text-byui-dark-text-secondary mt-1 text-center">
-            Lesson {currentIndex + 1} of {lessonOrder.length}
+            {currentIndex + 1} of {currentLessonPages.length}
           </div>
         </div>
 
         <div className="flex justify-between items-center">
-          {previousLesson ? (
+          {previousPage ? (
             <Link
-              to={previousLesson.path}
+              to={previousPage.path}
               className="flex items-center text-byui-dark-blue dark:text-byui-dark-accent-cyan hover:text-byui-brand-blue-2 transition-colors duration-200"
             >
               <svg
@@ -73,18 +133,18 @@ const LessonNavigation: React.FC<LessonNavigationProps> = ({ currentPath }) => {
                   d="M15.75 19.5 8.25 12l7.5-7.5"
                 />
               </svg>
-              <span>Previous: {previousLesson.title}</span>
+              <span>Previous: {previousPage.title}</span>
             </Link>
           ) : (
             <div></div> // Empty div to maintain layout
           )}
 
-          {nextLesson ? (
+          {nextPage ? (
             <Link
-              to={nextLesson.path}
+              to={nextPage.path}
               className="btn-primary flex items-center group"
             >
-              <span>Next: {nextLesson.title}</span>
+              <span>Next: {nextPage.title}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

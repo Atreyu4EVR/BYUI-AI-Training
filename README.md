@@ -1,73 +1,253 @@
-# BYU-Idaho AI Training for Administrators
+# BYU-Idaho AI Training Application
 
-This project is an interactive training site designed to equip BYU-Idaho administrators and staff with practical AI knowledge and skills to enhance their effectiveness and productivity while upholding the university's values and standards.
+This repository contains the BYU-Idaho Artificial Intelligence Training application, designed to help administrators learn about AI technologies and how to apply them in their work.
 
-## Project Overview
+## Features
 
-The training site covers:
+- Comprehensive AI learning content
+- Interactive search functionality
+- Responsive design for all devices
+- Dark/light mode support
+- Glossary of AI terms
+- Single-page application (SPA) architecture
 
-- **AI Fundamentals**: History, capabilities, and how generative AI works
-- **Practical Applications**: Real-world administrative tasks ideal for AI assistance
-- **Effective Use Skills**: Crafting effective prompts with context levels (minimal, moderate, comprehensive)
-- **BYU-Idaho AI Guidelines**: Official guidance on approved tools and data usage
+## Technologies
 
-Built with React, TypeScript, Vite, and Tailwind CSS, with full support for both light and dark modes.
+### Core
 
-## Setup Instructions
+- React 18
+- TypeScript
+- Tailwind CSS
+- Vite
+- React Router (v7)
 
-1. **Clone the repository:**
+### UI Components & Icons
 
-   ```bash
-   git clone [repository-url]
-   cd Training-BYUI-Administrators
-   ```
+- Headless UI (`@headlessui/react`)
+- Heroicons (`@heroicons/react`)
+- Lucide React
 
-2. **Install dependencies:**
+### State Management
 
-   ```bash
-   npm install
-   ```
+- React Context API (for theme and search functionality)
 
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal) to view it in the browser.
+### Search
 
-## Available Scripts
+- Fuse.js for fuzzy searching
 
-### `npm run dev`
+### Build & Deployment
 
-Runs the app in development mode with hot-reloading enabled.
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder, optimized for performance.
-
-### `npm run preview`
-
-Serves the production build locally for testing before deployment.
+- Docker & Nginx
+- Azure App Service
+- Azure Container Registry
 
 ## Project Structure
 
-- **Lesson One**: Covers AI fundamentals, history, capabilities, and how generative AI works
-- **Prompt Exercises**: Interactive examples of minimal, moderate, and comprehensive prompting techniques
-- **Prerequisites**: Setup guide for necessary accounts (ChatGPT)
-- **About**: Information about the training initiative and BYU-Idaho AI guidelines
+```
+src/
+├── assets/        # Static assets and images
+├── components/    # React components
+├── context/       # Context providers (Theme, Search)
+├── routes.tsx     # Centralized routing configuration
+├── index.css      # Global styles and Tailwind imports
+└── main.tsx       # Application entry point
+```
 
-## Deployment
+### Key Components
 
-The site is configured to be deployed as a GitHub Pages site with proper routing.
+- `Layout.tsx` - Main application layout
+- `Navbar.tsx` - Navigation component
+- `SearchBar.tsx` - Search functionality
+- `ThemeToggle.tsx` - Light/dark theme switcher
 
-1. **Build the project:**
+### Context Providers
 
-   ```bash
-   npm run build
+- `ThemeContext.tsx` - Manages light/dark theme preferences
+- `SearchContext.tsx` - Manages search functionality
+
+### Routing Architecture
+
+The application uses React Router v7 for client-side routing in a single-page application (SPA) architecture:
+
+- All routes are defined in `src/routes.tsx`
+- `BrowserRouter` provides clean URLs without hash fragments
+- Nginx is configured to redirect all requests to `index.html`
+- A 404 page redirects to the main application with the requested path
+
+#### SPA Routing Configuration
+
+The application includes multiple layers of SPA routing support:
+
+1. **Development**: Custom middleware in `spa-history-fallback.ts` handles client-side routing
+2. **Production (Nginx)**: Configuration in `nginx.conf` redirects all routes to index.html
+3. **Static Hosting**: Configuration files in the `public` directory for various platforms:
+   - `_redirects` file for Netlify
+   - `_headers` file with security headers
+
+## Development
+
+### Prerequisites
+
+- Node.js (v16+)
+- npm or yarn
+
+### Environment Variables
+
+No environment variables are required for local development. For production deployment, see the Docker and Azure configuration sections.
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/Training-BYUI-Administrators.git
+cd Training-BYUI-Administrators
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+### Available Scripts
+
+```bash
+# Start development server
+npm run dev
+
+# Type-check and build for production
+npm run build
+
+# Lint TypeScript/TSX files
+npm run lint
+
+# Preview production build locally
+npm run preview
+```
+
+### Browser Compatibility
+
+The application supports all modern browsers (Chrome, Firefox, Safari, Edge). Internet Explorer is not supported.
+
+## Build
+
+```bash
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+## Docker Deployment
+
+This application can be containerized for easy deployment using Docker.
+
+### Building the Docker Image
+
+```bash
+# Build the image (specifying platform for compatibility with Azure)
+docker build -t byui-ai-training:latest --platform linux/amd64 .
+
+# Run locally
+docker run -p 8080:80 byui-ai-training:latest
+```
+
+Visit `http://localhost:8080` to see the application running.
+
+### Deployment Architecture
+
+The application is built as a static site and served through Nginx within a Docker container:
+
+1. Build stage compiles the React/TypeScript application
+2. Production stage uses Nginx to serve the static assets with SPA routing support
+3. Container is deployed to Azure App Service
+
+## Azure Deployment
+
+This repository includes configuration for deploying to Azure using:
+
+1. Azure DevOps Pipelines (`azure-pipelines.yml`)
+2. GitHub Actions (`.github/workflows/azure-deploy.yml`)
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+### Quick Azure CLI Deployment
+
+```bash
+# Login to Azure
+az login
+
+# Create a resource group
+az group create --name byui-ai-training-rg --location westus2
+
+# Create an App Service plan
+az appservice plan create --name byui-ai-training-plan --resource-group byui-ai-training-rg --is-linux --sku B1
+
+# Create a container registry
+az acr create --resource-group byui-ai-training-rg --name byuiaitraining --sku Basic
+
+# Build and push to ACR
+az acr build --registry byuiaitraining --image byui-ai-training:latest .
+
+# Create a web app using the container image
+az webapp create --resource-group byui-ai-training-rg --plan byui-ai-training-plan --name byui-ai-training --deployment-container-image-name byuiaitraining.azurecr.io/byui-ai-training:latest
+```
+
+## Setting Up AI Inference
+
+This application uses Hugging Face's inference API for AI capabilities. To set up the environment:
+
+1. Create a `.env` file in the project root with the following content:
+
+   ```
+   # HuggingFace API key (required for AI inference)
+   HUGGINGFACE_API_KEY=your_huggingface_api_key_here
+
+   # Server port (default is 3001)
+   PORT=3001
+
+   # Node environment
+   NODE_ENV=development
    ```
 
-2. **Deploy using GitHub Actions:**
-   The repository includes a GitHub Actions workflow that automatically builds and deploys the site when changes are pushed to the main branch.
+2. Replace `your_huggingface_api_key_here` with your actual Hugging Face API key.
 
-## Additional Resources
+   - You can get a key by creating an account at [Hugging Face](https://huggingface.co/).
+   - Generate an API key in your account settings.
 
-For more information about BYU-Idaho's AI guidelines, please visit the [official BYU-Idaho GenAI website](https://www.byui.edu/genai/).
+3. For deployment, make sure to set the `HUGGINGFACE_API_KEY` environment variable in your Azure App Service settings.
+
+## API Endpoints
+
+The backend provides several endpoints for AI inference:
+
+- `GET /api/health` - Health check endpoint
+- `POST /api/token-prediction` - Get token predictions from a model
+- `POST /api/prompt-feedback` - Get feedback on prompts
+- `POST /api/huggingface/:model` - Generic endpoint for any Hugging Face model
+
+## Contributing
+
+### Guidelines
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+### Code Style
+
+- Follow the existing code style
+- Use TypeScript for all new components
+- Add JSDoc comments for functions and components
+- Ensure components are responsive
+
+## License
+
+[MIT License](LICENSE)
+
+## Contact
+
+For questions about this project, please contact the BYU-Idaho IT department.

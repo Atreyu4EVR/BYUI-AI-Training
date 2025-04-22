@@ -59,13 +59,41 @@ const Navbar = () => {
     }`;
   };
 
-  // Check if any lesson paths are active
-  const isAnyLessonActive = isPathActive([
+  // Check if any lesson one paths are active
+  const isLessonOneActive = isPathActive([
+    "lesson-one",
     "history",
     "capabilities",
     "how-it-works",
-    "getting-started",
+    "artificial-intelligence",
+    "ai-context",
   ]);
+
+  // Check if any lesson two paths are active
+  const isLessonTwoActive = isPathActive([
+    "lesson-two",
+    "context-is-everything",
+    "prompt-basics",
+    "advanced-prompting",
+    "prompt-feedback",
+  ]);
+
+  // Check if any lesson three paths are active
+  const isLessonThreeActive = isPathActive([
+    "lesson-three",
+    "lesson-three-topic-1",
+    "lesson-three-topic-2",
+    "lesson-three-topic-3",
+    "comprehensive",
+  ]);
+
+  // Overall check if any lesson is active
+  const isAnyLessonActive =
+    isLessonOneActive ||
+    isLessonTwoActive ||
+    // Commented out since Lesson Three is hidden
+    // isLessonThreeActive ||
+    isPathActive(["getting-started"]);
 
   // Check if any resource paths are active
   const isAnyResourceActive = isPathActive([
@@ -109,19 +137,7 @@ const Navbar = () => {
                 Home
               </NavLink>
 
-              {/* Prerequisites */}
-              <NavLink
-                to="/prerequisites"
-                className={({ isActive }) =>
-                  `${baseLinkClasses} ${
-                    isActive ? "bg-white/20 text-white" : "navbar-link"
-                  }`
-                }
-              >
-                Prerequisites
-              </NavLink>
-
-              {/* Lessons Dropdown */}
+              {/* Training Dropdown (formerly Lessons) */}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton
@@ -131,7 +147,7 @@ const Navbar = () => {
                         : "navbar-link"
                     } inline-flex items-center`}
                   >
-                    Lessons
+                    Training
                     <ChevronDownIcon
                       aria-hidden="true"
                       className="-mr-1 ml-1 size-5"
@@ -142,19 +158,22 @@ const Navbar = () => {
                   transition
                   className="absolute left-0 md:left-auto md:right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
                 >
+                  {/* Getting Started */}
+                  <MenuItem>
+                    <Link
+                      to="/getting-started"
+                      className={getMenuItemClass("getting-started")}
+                    >
+                      Getting Started
+                    </Link>
+                  </MenuItem>
+
                   {/* Lesson One Submenu */}
                   <Fragment>
                     <div className="px-1 py-1">
                       <button
                         onClick={() => toggleSubmenu("lessonOne")}
-                        className={getSubmenuHeaderClass(
-                          isPathActive([
-                            "history",
-                            "capabilities",
-                            "how-it-works",
-                            "getting-started",
-                          ])
-                        )}
+                        className={getSubmenuHeaderClass(isLessonOneActive)}
                       >
                         <span>Lesson One</span>
                         <ChevronRightIcon
@@ -168,10 +187,20 @@ const Navbar = () => {
                         <div className="pl-2 border-l border-byui-dark-border ml-4 mt-1">
                           <MenuItem>
                             <Link
-                              to="/getting-started"
-                              className={getMenuItemClass("getting-started")}
+                              to="/lesson-one"
+                              className={getMenuItemClass("lesson-one")}
                             >
-                              Getting Started
+                              Overview
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/artificial-intelligence"
+                              className={getMenuItemClass(
+                                "artificial-intelligence"
+                              )}
+                            >
+                              What is AI?
                             </Link>
                           </MenuItem>
                           <MenuItem>
@@ -180,6 +209,14 @@ const Navbar = () => {
                               className={getMenuItemClass("history")}
                             >
                               History
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/ai-context"
+                              className={getMenuItemClass("ai-context")}
+                            >
+                              Context
                             </Link>
                           </MenuItem>
                           <MenuItem>
@@ -198,89 +235,151 @@ const Navbar = () => {
                               How It Works
                             </Link>
                           </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/token-prediction"
+                              className={getMenuItemClass("token-prediction")}
+                            >
+                              Activity: Token Prediction
+                            </Link>
+                          </MenuItem>
                         </div>
                       )}
                     </div>
                   </Fragment>
 
-                  {/* Lesson Two Placeholder */}
+                  {/* Lesson Two Submenu */}
                   <Fragment>
                     <div className="px-1 py-1">
                       <button
-                        className={`${getSubmenuHeaderClass(
-                          false
-                        )} text-white/60 cursor-not-allowed`}
-                        disabled
+                        onClick={() => toggleSubmenu("lessonTwo")}
+                        className={getSubmenuHeaderClass(isLessonTwoActive)}
                       >
                         <span>Lesson Two</span>
-                        <span className="text-xs text-white/50">
-                          (Coming Soon)
-                        </span>
+                        <ChevronRightIcon
+                          className={`size-4 transition-transform duration-200 ${
+                            activeSubmenu === "lessonTwo" ? "rotate-90" : ""
+                          }`}
+                        />
                       </button>
+
+                      {activeSubmenu === "lessonTwo" && (
+                        <div className="pl-2 border-l border-byui-dark-border ml-4 mt-1">
+                          <MenuItem>
+                            <Link
+                              to="/lesson-two"
+                              className={getMenuItemClass("lesson-two")}
+                            >
+                              Overview
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/context-is-everything"
+                              className={getMenuItemClass(
+                                "context-is-everything"
+                              )}
+                            >
+                              Context is Everything
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/prompt-basics"
+                              className={getMenuItemClass("prompt-basics")}
+                            >
+                              Prompt Basics
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/advanced-prompting"
+                              className={getMenuItemClass("advanced-prompting")}
+                            >
+                              Advanced Prompting
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/prompt-feedback"
+                              className={getMenuItemClass("prompt-feedback")}
+                            >
+                              Activity: Prompt Feedback
+                            </Link>
+                          </MenuItem>
+                        </div>
+                      )}
                     </div>
                   </Fragment>
 
-                  {/* Lesson Three Placeholder */}
+                  {/* Temporarily hide Lesson Three Submenu 
                   <Fragment>
                     <div className="px-1 py-1">
                       <button
-                        className={`${getSubmenuHeaderClass(
-                          false
-                        )} text-white/60 cursor-not-allowed`}
-                        disabled
+                        onClick={() => toggleSubmenu("lessonThree")}
+                        className={getSubmenuHeaderClass(isLessonThreeActive)}
                       >
                         <span>Lesson Three</span>
-                        <span className="text-xs text-white/50">
-                          (Coming Soon)
-                        </span>
+                        <ChevronRightIcon
+                          className={`size-4 transition-transform duration-200 ${
+                            activeSubmenu === "lessonThree" ? "rotate-90" : ""
+                          }`}
+                        />
                       </button>
+
+                      {activeSubmenu === "lessonThree" && (
+                        <div className="pl-2 border-l border-byui-dark-border ml-4 mt-1">
+                          <MenuItem>
+                            <Link
+                              to="/lesson-three"
+                              className={getMenuItemClass("lesson-three")}
+                            >
+                              Overview
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/lesson-three-topic-1"
+                              className={getMenuItemClass(
+                                "lesson-three-topic-1"
+                              )}
+                            >
+                              Placeholder 1
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/lesson-three-topic-2"
+                              className={getMenuItemClass(
+                                "lesson-three-topic-2"
+                              )}
+                            >
+                              Placeholder 2
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/lesson-three-topic-3"
+                              className={getMenuItemClass(
+                                "lesson-three-topic-3"
+                              )}
+                            >
+                              Placeholder 3
+                            </Link>
+                          </MenuItem>
+                          <MenuItem>
+                            <Link
+                              to="/comprehensive"
+                              className={getMenuItemClass("comprehensive")}
+                            >
+                              Activity: Comprehensive Context
+                            </Link>
+                          </MenuItem>
+                        </div>
+                      )}
                     </div>
                   </Fragment>
-                </MenuItems>
-              </Menu>
-
-              {/* Activities (formerly Prompt Exercises) */}
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <MenuButton
-                    className={`${baseLinkClasses} ${
-                      isPathActive(["minimal", "moderate", "comprehensive"])
-                        ? "bg-white/20 text-white"
-                        : "navbar-link"
-                    } inline-flex items-center`}
-                  >
-                    Activities
-                    <ChevronDownIcon
-                      aria-hidden="true"
-                      className="-mr-1 ml-1 size-5"
-                    />
-                  </MenuButton>
-                </div>
-                <MenuItems
-                  transition
-                  className="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-byui-light-navbar dark:bg-byui-dark-navbar py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[enter]:ease-out data-[leave]:duration-75 data-[leave]:ease-in"
-                >
-                  <MenuItem>
-                    <Link to="/minimal" className={getMenuItemClass("minimal")}>
-                      Minimal Context
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link
-                      to="/moderate"
-                      className={getMenuItemClass("moderate")}
-                    >
-                      Moderate Context
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link
-                      to="/comprehensive"
-                      className={getMenuItemClass("comprehensive")}
-                    >
-                      Comprehensive Context
-                    </Link>
-                  </MenuItem>
+                  */}
                 </MenuItems>
               </Menu>
 

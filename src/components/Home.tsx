@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import chatgptScreenshot from "../assets/chatgpt.png";
+import heroTraining from "../assets/hero-training.gif";
 
 const Home = () => {
   return (
@@ -23,7 +23,7 @@ const Home = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Link to="/getting-started" className="btn-primary">
+              <Link to="/lesson-one" className="btn-primary">
                 Get started
               </Link>
               <Link
@@ -37,10 +37,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ChatGPT Screenshot Container */}
+      {/* Hero Training GIF Container */}
       <div className="container mx-auto max-w-5xl px-4 -mt-24 mb-16">
         <div className="bg-white dark:bg-byui-dark-card rounded-xl shadow-lg overflow-hidden">
-          {/* Screenshot Header */}
+          {/* GIF Header */}
           <div className="bg-gray-50 dark:bg-byui-dark-background p-3 border-b border-gray-200 dark:border-byui-dark-border flex items-center">
             <div className="flex space-x-2 mr-3">
               <div className="w-3 h-3 rounded-full bg-red-400"></div>
@@ -48,15 +48,15 @@ const Home = () => {
               <div className="w-3 h-3 rounded-full bg-green-400"></div>
             </div>
             <div className="text-sm font-medium text-byui-light-text-secondary dark:text-byui-dark-text-secondary flex-1 text-center">
-              ChatGPT - BYU-Idaho
+              AI Training - BYU-Idaho
             </div>
           </div>
 
-          {/* Screenshot Image */}
+          {/* GIF Image */}
           <div className="p-1 bg-white dark:bg-gray-900">
             <img
-              src={chatgptScreenshot}
-              alt="ChatGPT interface screenshot"
+              src={heroTraining}
+              alt="AI Training illustration"
               className="w-full h-auto object-cover rounded shadow-inner"
             />
           </div>

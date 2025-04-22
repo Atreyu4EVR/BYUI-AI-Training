@@ -7,6 +7,10 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+# macOS specific files
+.DS_Store
+.DS_Store?
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -136,12 +140,28 @@ _site
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Cursor Rules
+.cursor/*
+.cursor/
+
+logs/*
+
+.github/workflows/*
+
 # yarn v2
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Lesson files - more specific patterns
+lessons/
+lessons/*
+lessons/**/*.md
+lessons/LESSON_*.md
+lessons/LESSON_PLAN.md
+lessons/principles.md
 
 # Vite build output
 dist

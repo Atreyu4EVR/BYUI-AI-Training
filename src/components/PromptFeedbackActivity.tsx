@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { InferenceClient } from "@huggingface/inference";
+import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 // Example prompts for users to try
@@ -16,36 +15,12 @@ const PromptFeedbackActivity: React.FC = () => {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [client, setClient] = useState<InferenceClient | null>(null);
   const [showExamples, setShowExamples] = useState(false);
-
-  // Initialize the client when the component mounts
-  useEffect(() => {
-    try {
-      const apiKey = import.meta.env.VITE_HUGGINGFACE_API_KEY;
-      if (!apiKey) {
-        setError(
-          "API key is not configured. Please contact the administrator."
-        );
-        return;
-      }
-
-      setClient(new InferenceClient(apiKey));
-    } catch (err) {
-      console.error("Error initializing client:", err);
-      setError("Failed to initialize client. Please try again later.");
-    }
-  }, []);
 
   // Get feedback on the user's prompt
   const handleGetFeedback = async () => {
     if (!userPrompt.trim()) {
       setError("Please enter a prompt to get feedback");
-      return;
-    }
-
-    if (!client) {
-      setError("Client is not initialized. Please try again later.");
       return;
     }
 
@@ -79,33 +54,61 @@ const PromptFeedbackActivity: React.FC = () => {
     
       You MUST follow the template exactly. Use proper Markdown syntax with headings, bold text, and numbered lists. Do not add any HTML tags.`;
 
-      // The message to send to the model
-      const messages = [
+      // Call our backend API instead of HuggingFace directly
+      const response = await fetch(
+        "/api/huggingface/meta-llama/Llama-3.3-70B-Instruct",
         {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: `Please analyze this prompt and give feedback on how it could be improved based on the principles of effective prompt engineering:\n\n"${userPrompt}"`,
-        },
-      ];
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            inputs: {
+              messages: [
+                {
+                  role: "system",
+                  content: systemPrompt,
+                },
+                {
+                  role: "user",
+                  content: `Please analyze this prompt and give feedback on how it could be improved based on the principles of effective prompt engineering:\n\n"${userPrompt}"`,
+                },
+              ],
+            },
+            parameters: {
+              max_tokens: 600,
+              temperature: 0.7,
+              stream: true,
+            },
+          }),
+        }
+      );
 
-      let out = "";
-
-      // Stream the response from the LLM
-      const stream = await client.chatCompletionStream({
-        model: "meta-llama/Llama-3.3-70B-Instruct", // You can change this to a different model if needed
-        messages,
-        max_tokens: 600,
-      });
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
 
       // Process the streaming response
-      for await (const chunk of stream) {
-        if (chunk.choices && chunk.choices.length > 0) {
-          const newContent = chunk.choices[0].delta.content || "";
-          out += newContent;
-          setFeedback(out);
+      const reader = response.body?.getReader();
+      if (reader) {
+        let out = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          // Convert the chunk to text
+          const chunk = new TextDecoder().decode(value);
+          try {
+            const parsedChunk = JSON.parse(chunk);
+            if (parsedChunk.choices && parsedChunk.choices.length > 0) {
+              const newContent = parsedChunk.choices[0].delta.content || "";
+              out += newContent;
+              setFeedback(out);
+            }
+          } catch (e) {
+            console.error("Error parsing chunk:", e);
+          }
         }
       }
     } catch (err) {
@@ -144,7 +147,7 @@ const PromptFeedbackActivity: React.FC = () => {
           <button
             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleGetFeedback}
-            disabled={loading || !userPrompt.trim() || !client}
+            disabled={loading || !userPrompt.trim()}
           >
             {loading ? (
               <>

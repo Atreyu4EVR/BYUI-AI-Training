@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { InferenceClient } from "@huggingface/inference";
+import React, { useState } from "react";
 
 // Example sentences for users to try
 const EXAMPLE_SENTENCES = [
@@ -17,26 +16,7 @@ const TokenPredictionActivity: React.FC = () => {
   >([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [client, setClient] = useState<InferenceClient | null>(null);
   const [showExamples, setShowExamples] = useState(false);
-
-  // Initialize the client when the component mounts
-  useEffect(() => {
-    try {
-      const apiKey = import.meta.env.VITE_HUGGINGFACE_API_KEY;
-      if (!apiKey) {
-        setError(
-          "API key is not configured. Please contact the administrator."
-        );
-        return;
-      }
-
-      setClient(new InferenceClient(apiKey));
-    } catch (err) {
-      console.error("Error initializing client:", err);
-      setError("Failed to initialize client. Please try again later.");
-    }
-  }, []);
 
   // Get token predictions for the user's sentence
   const handleGetPredictions = async () => {
@@ -45,58 +25,61 @@ const TokenPredictionActivity: React.FC = () => {
       return;
     }
 
-    if (!client) {
-      setError("Client is not initialized. Please try again later.");
-      return;
-    }
-
     setLoading(true);
     setError("");
     setPredictions([]);
 
     try {
-      // System prompt that instructs the LLM how to analyze and predict tokens
-      const systemPrompt = `You are a helpful AI assistant that helps users understand how token prediction works in large language models. 
-
-      When given a sentence fragment, you should:
-      1. Analyze what the most likely next tokens (words or partial words) would be
-      2. Provide the top 5-8 most likely next tokens with estimated probabilities
-      3. Return ONLY a JSON array of objects with 'token' and 'probability' fields
-      4. Make sure probabilities are reasonable (they don't need to sum to 100%)
-      5. Focus on providing realistic predictions similar to how a language model would actually predict the next token
-      
-      Example format:
-      [
-        {"token": "participate", "probability": 15},
-        {"token": "succeed", "probability": 12},
-        {"token": "develop", "probability": 10}
-      ]
-      
-      Return ONLY the JSON array and nothing else. No explanations, no surrounding text.`;
-
-      // The message to send to the model
-      const messages = [
-        {
-          role: "system",
-          content: systemPrompt,
+      // Call our backend API instead of HuggingFace directly
+      const response = await fetch("/api/token-prediction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          role: "user",
-          content: `Predict the most likely next tokens for this sentence fragment: "${userSentence}"`,
-        },
-      ];
+        body: JSON.stringify({
+          model: "meta-llama/Llama-3.3-70B-Instruct",
+          inputs: {
+            messages: [
+              {
+                role: "system",
+                content: `You are a helpful AI assistant that helps users understand how token prediction works in large language models. 
 
-      // Get the response from the LLM
-      const response = await client.chatCompletion({
-        model: "meta-llama/Llama-3.3-70B-Instruct", // You can change this to a different model if needed
-        messages,
-        max_tokens: 400,
-        temperature: 0.7,
+                When given a sentence fragment, you should:
+                1. Analyze what the most likely next tokens (words or partial words) would be
+                2. Provide the top 5-8 most likely next tokens with estimated probabilities
+                3. Return ONLY a JSON array of objects with 'token' and 'probability' fields
+                4. Make sure probabilities are reasonable (they don't need to sum to 100%)
+                5. Focus on providing realistic predictions similar to how a language model would actually predict the next token
+                
+                Example format:
+                [
+                  {"token": "participate", "probability": 15},
+                  {"token": "succeed", "probability": 12},
+                  {"token": "develop", "probability": 10}
+                ]
+                
+                Return ONLY the JSON array and nothing else. No explanations, no surrounding text.`,
+              },
+              {
+                role: "user",
+                content: `Predict the most likely next tokens for this sentence fragment: "${userSentence}"`,
+              },
+            ],
+            max_tokens: 400,
+            temperature: 0.7,
+          },
+        }),
       });
 
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
       // Process the response
-      if (response.choices && response.choices.length > 0) {
-        const content = response.choices[0].message.content || "";
+      if (data.choices && data.choices.length > 0) {
+        const content = data.choices[0].message.content || "";
         // Extract JSON from the response
         try {
           // Find anything that looks like JSON in the response
@@ -161,7 +144,7 @@ const TokenPredictionActivity: React.FC = () => {
           <button
             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleGetPredictions}
-            disabled={loading || !userSentence.trim() || !client}
+            disabled={loading || !userSentence.trim()}
           >
             {loading ? (
               <>

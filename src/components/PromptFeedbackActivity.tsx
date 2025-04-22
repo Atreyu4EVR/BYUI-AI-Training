@@ -10,6 +10,8 @@ const EXAMPLE_PROMPTS = [
   "Draft an announcement about new campus parking regulations.",
 ];
 
+const API_BASE_URL = import.meta.env.PROD ? "" : "http://localhost:3001";
+
 const PromptFeedbackActivity: React.FC = () => {
   const [userPrompt, setUserPrompt] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -56,7 +58,7 @@ const PromptFeedbackActivity: React.FC = () => {
 
       // Call our backend API instead of HuggingFace directly
       const response = await fetch(
-        "/api/huggingface/meta-llama/Llama-3.3-70B-Instruct",
+        `${API_BASE_URL}/api/huggingface/meta-llama/Llama-3.3-70B-Instruct`,
         {
           method: "POST",
           headers: {
@@ -85,35 +87,55 @@ const PromptFeedbackActivity: React.FC = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`API responded with status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.error || `API responded with status: ${response.status}`
+        );
       }
 
       // Process the streaming response
       const reader = response.body?.getReader();
-      if (reader) {
-        let out = "";
+      if (!reader) {
+        throw new Error("Failed to get response reader");
+      }
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+      let out = "";
+      const decoder = new TextDecoder();
 
-          // Convert the chunk to text
-          const chunk = new TextDecoder().decode(value);
-          try {
-            const parsedChunk = JSON.parse(chunk);
-            if (parsedChunk.choices && parsedChunk.choices.length > 0) {
-              const newContent = parsedChunk.choices[0].delta.content || "";
-              out += newContent;
-              setFeedback(out);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        // Convert the chunk to text
+        const chunk = decoder.decode(value, { stream: true });
+        try {
+          // Try to parse each line as JSON (server may send multiple chunks)
+          const lines = chunk.split("\n").filter((line) => line.trim() !== "");
+
+          for (const line of lines) {
+            try {
+              const parsedChunk = JSON.parse(line);
+              if (parsedChunk.choices && parsedChunk.choices.length > 0) {
+                const newContent = parsedChunk.choices[0].delta?.content || "";
+                out += newContent;
+                setFeedback(out);
+              }
+            } catch (e) {
+              // Skip lines that aren't valid JSON
+              console.warn("Couldn't parse line as JSON:", line);
             }
-          } catch (e) {
-            console.error("Error parsing chunk:", e);
           }
+        } catch (e) {
+          console.error("Error processing chunk:", e);
         }
       }
     } catch (err) {
       console.error("Error getting feedback:", err);
-      setError("Failed to get feedback. Please try again later.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to get feedback. Please try again later."
+      );
     } finally {
       setLoading(false);
     }
@@ -177,11 +199,37 @@ const PromptFeedbackActivity: React.FC = () => {
               "Get Feedback"
             )}
           </button>
+
+          <button
+            className="ml-4 text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300 text-sm font-medium"
+            onClick={() => setShowExamples(!showExamples)}
+          >
+            {showExamples ? "Hide Examples" : "Show Examples"}
+          </button>
         </div>
+
+        {showExamples && (
+          <div className="mt-4 bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
+            <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              Example Prompts:
+            </h3>
+            <div className="space-y-2">
+              {EXAMPLE_PROMPTS.map((prompt, index) => (
+                <button
+                  key={index}
+                  className="block w-full text-left p-2 hover:bg-slate-200 dark:hover:bg-slate-600 rounded text-slate-700 dark:text-slate-300 text-sm transition-colors"
+                  onClick={() => handleSelectExample(prompt)}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {feedback && (
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+        <div className="mt-6 bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
           <div className="prose prose-slate dark:prose-invert prose-headings:text-cyan-600 dark:prose-headings:text-cyan-400 prose-headings:font-bold prose-strong:font-semibold prose-strong:text-slate-800 dark:prose-strong:text-slate-200 prose-a:text-cyan-600 dark:prose-a:text-cyan-400 prose-code:text-purple-600 dark:prose-code:text-purple-300 prose-ol:pl-6 prose-ul:pl-6 prose-li:my-1 max-w-none">
             <ReactMarkdown>{feedback}</ReactMarkdown>
           </div>

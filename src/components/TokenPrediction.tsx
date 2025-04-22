@@ -2,6 +2,8 @@ import React from "react";
 import TokenPredictionActivity from "./TokenPredictionActivity";
 import { BookOpen, BarChart } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import hfLogoDark from "../assets/hf-logo-with-white-title.png";
+import hfLogoLight from "../assets/hf-logo-with-title.png";
 
 const TokenPrediction: React.FC = () => {
   const { theme } = useTheme();
@@ -14,11 +16,7 @@ const TokenPrediction: React.FC = () => {
           <p>powered by</p>
           <div className="flex justify-center items-center relative group">
             <img
-              src={
-                theme === "dark"
-                  ? "src/assets/hf-logo-with-white-title.png"
-                  : "src/assets/hf-logo-with-title.png"
-              }
+              src={theme === "dark" ? hfLogoDark : hfLogoLight}
               alt="Hugging Face"
               className="w-32"
               title="Hugging Face - The collaboration platform for the machine learning community"

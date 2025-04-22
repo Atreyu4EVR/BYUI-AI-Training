@@ -9,6 +9,8 @@ const EXAMPLE_SENTENCES = [
   "When working with artificial intelligence, it's important to",
 ];
 
+const API_BASE_URL = import.meta.env.PROD ? "" : "http://localhost:3001";
+
 const TokenPredictionActivity: React.FC = () => {
   const [userSentence, setUserSentence] = useState("");
   const [predictions, setPredictions] = useState<
@@ -31,7 +33,7 @@ const TokenPredictionActivity: React.FC = () => {
 
     try {
       // Call our backend API instead of HuggingFace directly
-      const response = await fetch("/api/token-prediction", {
+      const response = await fetch(`${API_BASE_URL}/api/token-prediction`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -65,6 +67,8 @@ const TokenPredictionActivity: React.FC = () => {
                 content: `Predict the most likely next tokens for this sentence fragment: "${userSentence}"`,
               },
             ],
+          },
+          parameters: {
             max_tokens: 400,
             temperature: 0.7,
           },
@@ -72,14 +76,17 @@ const TokenPredictionActivity: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API responded with status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error || `API responded with status: ${response.status}`
+        );
       }
 
       const data = await response.json();
 
       // Process the response
       if (data.choices && data.choices.length > 0) {
-        const content = data.choices[0].message.content || "";
+        const content = data.choices[0].message?.content || "";
         // Extract JSON from the response
         try {
           // Find anything that looks like JSON in the response
@@ -107,10 +114,16 @@ const TokenPredictionActivity: React.FC = () => {
           console.error("Error parsing prediction data:", parseErr);
           setError("Failed to parse prediction data. Please try again.");
         }
+      } else {
+        throw new Error("Invalid response format from API");
       }
     } catch (err) {
       console.error("Error getting predictions:", err);
-      setError("Failed to get predictions. Please try again later.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to get predictions. Please try again later."
+      );
     } finally {
       setLoading(false);
     }
@@ -174,7 +187,33 @@ const TokenPredictionActivity: React.FC = () => {
               "Predict Next Tokens"
             )}
           </button>
+
+          <button
+            className="ml-4 text-cyan-600 hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300 text-sm font-medium"
+            onClick={() => setShowExamples(!showExamples)}
+          >
+            {showExamples ? "Hide Examples" : "Show Examples"}
+          </button>
         </div>
+
+        {showExamples && (
+          <div className="mt-4 bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
+            <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+              Example Sentences:
+            </h3>
+            <div className="space-y-2">
+              {EXAMPLE_SENTENCES.map((sentence, index) => (
+                <button
+                  key={index}
+                  className="block w-full text-left p-2 hover:bg-slate-200 dark:hover:bg-slate-600 rounded text-slate-700 dark:text-slate-300 text-sm transition-colors"
+                  onClick={() => handleSelectExample(sentence)}
+                >
+                  {sentence}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {predictions.length > 0 && (
@@ -199,8 +238,7 @@ const TokenPredictionActivity: React.FC = () => {
           </div>
           <p className="mt-4 text-xs text-slate-500 dark:text-slate-400 italic">
             Note: These predictions are based on statistical patterns the AI has
-            learned, similar to how token prediction works in large language
-            models.
+            learned from training data.
           </p>
         </div>
       )}
@@ -210,20 +248,6 @@ const TokenPredictionActivity: React.FC = () => {
           {error}
         </div>
       )}
-
-      <div className="mt-8 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-md border border-blue-200 dark:border-blue-800">
-        <h3 className="font-semibold text-blue-800 dark:text-blue-300">
-          About Token Prediction
-        </h3>
-        <p className="text-blue-700 dark:text-blue-400 mt-2">
-          This activity demonstrates how AI language models predict the next
-          token (word or part of a word) based on the context provided. At their
-          core, these models are simply predicting what text is most likely to
-          come next, based on patterns learned from massive amounts of training
-          data. The percentages represent the model's confidence level for each
-          prediction.
-        </p>
-      </div>
     </div>
   );
 };

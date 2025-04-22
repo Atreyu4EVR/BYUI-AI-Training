@@ -194,6 +194,39 @@ az acr build --registry byuiaitraining --image byui-ai-training:latest .
 az webapp create --resource-group byui-ai-training-rg --plan byui-ai-training-plan --name byui-ai-training --deployment-container-image-name byuiaitraining.azurecr.io/byui-ai-training:latest
 ```
 
+## Setting Up AI Inference
+
+This application uses Hugging Face's inference API for AI capabilities. To set up the environment:
+
+1. Create a `.env` file in the project root with the following content:
+
+   ```
+   # HuggingFace API key (required for AI inference)
+   HUGGINGFACE_API_KEY=your_huggingface_api_key_here
+
+   # Server port (default is 3001)
+   PORT=3001
+
+   # Node environment
+   NODE_ENV=development
+   ```
+
+2. Replace `your_huggingface_api_key_here` with your actual Hugging Face API key.
+
+   - You can get a key by creating an account at [Hugging Face](https://huggingface.co/).
+   - Generate an API key in your account settings.
+
+3. For deployment, make sure to set the `HUGGINGFACE_API_KEY` environment variable in your Azure App Service settings.
+
+## API Endpoints
+
+The backend provides several endpoints for AI inference:
+
+- `GET /api/health` - Health check endpoint
+- `POST /api/token-prediction` - Get token predictions from a model
+- `POST /api/prompt-feedback` - Get feedback on prompts
+- `POST /api/huggingface/:model` - Generic endpoint for any Hugging Face model
+
 ## Contributing
 
 ### Guidelines

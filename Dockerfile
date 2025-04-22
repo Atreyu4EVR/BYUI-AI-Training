@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 # Copy source code and build the app
 COPY . .
@@ -16,7 +16,7 @@ WORKDIR /app
 
 # Copy server package files and install dependencies
 COPY server/package*.json ./
-RUN npm install
+RUN npm install --omit=dev
 
 # Copy server code
 COPY server .
@@ -24,8 +24,8 @@ COPY server .
 # Production stage
 FROM --platform=linux/amd64 nginx:alpine
 
-# Install Node.js
-RUN apk add --update nodejs npm supervisor
+# Install Node.js with explicit version for stability
+RUN apk add --update --no-cache nodejs npm supervisor
 
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -35,13 +35,17 @@ COPY --from=frontend-build /app/dist /usr/share/nginx/html
 
 # Copy backend
 WORKDIR /app/backend
-COPY --from=backend-build /app .
+COPY --from=backend-build /app /app/backend
+
+# Create logs directory
+RUN mkdir -p /var/log/supervisor /app/backend/logs
 
 # Copy supervisor configuration
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Create directory for supervisor logs
-RUN mkdir -p /var/log/supervisor
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -qO- http://localhost/api/health || exit 1
 
 # Expose port 80
 EXPOSE 80
